@@ -14,8 +14,6 @@ codeUtilisateur VARCHAR(10),
 motDePasse VARCHAR(8) NOT NULL,
 prenom VARCHAR(30) NOT NULL,
 nom VARCHAR(30) NOT NULL,
-dateNaissance DATE,
-sexe CHAR(1) NOT NULL CHECK (Sexe IN('F', 'M')),
 courriel VARCHAR(30),
 CONSTRAINT pk_Utilisateur PRIMARY KEY(codeUtilisateur)
 );
@@ -24,7 +22,7 @@ CREATE INDEX indNomUtilisateur ON Utilisateur(prenom, nom);
 
 CREATE TABLE Employe (
 matricule VARCHAR(12),
-type ENUM('Administrateur','Enseignant') NOT NULL,
+type ENUM('Administrateur', 'Enseignant') NOT NULL,
 CONSTRAINT pk_Employe PRIMARY KEY(matricule),
 CONSTRAINT fk_Employe_Utilisateur FOREIGN KEY(matricule) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -33,33 +31,30 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE Etudiant (
 codePermanent VARCHAR(12),
 codeMS VARCHAR(8) NOT NULL,
-fonction VARCHAR(10) NOT NULL CHECK (fonction IN('Chef', 'Coequipier')),
+fonction ENUM('Chef', 'Coequipier') NOT NULL,
 CONSTRAINT pk_Etudiant PRIMARY KEY(codePermanent),
 CONSTRAINT fk_Etudiant_Utilisateur FOREIGN KEY(codePermanent) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT unique_Code_MS UNIQUE(codeMS),
+CONSTRAINT unique_Code_MS UNIQUE(codeMS)
 );
 
 CREATE TABLE Cours (
 sigle VARCHAR(7),
 titre VARCHAR(30),
-nbHeures INTEGER,
-nbCredits INTEGER,
-cycle INTEGER,
 CONSTRAINT pk_Cours PRIMARY KEY(sigle)
 );
 
 CREATE TABLE GroupeCours (
 noGroupeCours INTEGER,
-session VARCHAR(1) NOT NULL CHECK (Session IN('H', 'E', 'A')),
+session ENUM('H', 'E', 'A') NOT NULL,
 annee INTEGER NOT NULL,
 enseignant VARCHAR(12),
 sigle VARCHAR(7),
 CONSTRAINT pk_Groupe_Cours PRIMARY KEY(noGroupeCours,sigle),
-CONSTRAINT fk_Groupe_Cours_Enseignant FOREIGN KEY(enseignant) REFERENCES Enseignant(matricule)
+CONSTRAINT fk_Groupe_Cours_Enseignant FOREIGN KEY(enseignant) REFERENCES Employe(matricule)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Groupe_Cours_Cours FOREIGN KEY(sigle) REFERENCES Cours(sigle)
-ON DELETE NO ACTION ON UPDATE CASCADE,
+ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE EtudiantGroupeCours (
@@ -92,16 +87,17 @@ noEquipe INTEGER,
 nomEquipe VARCHAR(10),
 chefEquipe VARCHAR(12) NOT NULL,
 sigle VARCHAR(7),
-CONSTRAINT pk_Equipe PRIMARY KEY(noEquipe,sigle,noGroupeCours),
+noGroupeCours INTEGER,
+CONSTRAINT pk_Equipe PRIMARY KEY(noEquipe, sigle, noGroupeCours),
 CONSTRAINT fk_Equipe_Etudiant FOREIGN KEY(chefEquipe) REFERENCES Etudiant(codePermanent)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Equipe_Cours FOREIGN KEY(sigle) REFERENCES Cours(sigle)
 ON DELETE NO ACTION ON UPDATE CASCADE,
-CONSTRAINT fk_Equipe_Cours FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
+CONSTRAINT fk_Equipe_Groupe_Cours FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
 ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
-CREATE TABLE AccesFTP(
+CREATE TABLE AccesFTP (
 idDepot INTEGER,
 noEquipe INTEGER,
 motDePasse INTEGER,
@@ -119,7 +115,7 @@ CONSTRAINT pk_Fichier PRIMARY KEY(sigle, noGroupeCours, noEquipe, codePermanent)
 CONSTRAINT fk_Etudiant_Equipe_Cours FOREIGN KEY(sigle) REFERENCES Cours(sigle)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Groupe_Cours FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
-ON DELETE NO_ACTION ON UPDATE CASCADE,
+ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Equipe FOREIGN KEY(noEquipe) REFERENCES Equipe(noEquipe)
 ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Etudiant FOREIGN KEY(codePermanent) REFERENCES Etudiant(codePermanent)
