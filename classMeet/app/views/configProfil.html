@@ -1,0 +1,27 @@
+<div ng-include="'views/menu/menu.html'"></div>
+<div align="center" ng-controller="ProfilCtrl">
+  <br>
+  <h3>Configuration du profil</h3>
+  <br>
+  <br>
+  Nom: <input type="text" ng-model="nom"/>
+  <br>
+  <br>
+  Prenom: <input type="text" ng-model="prenom"/>
+  <br>
+  <br>
+  Email: <input type="text" ng-model="email"/>
+  <br>
+  <br>
+  Mot de passe:<input type="password" ng-model="MDP"/>
+  <br>
+  <br>
+  Nouveau mot de passe:<input type="password" ng-model="NMDP"/>
+  <br>
+  <br>
+  Répéter le mot de passe:<input type="password" ng-model="NMDP2"/>
+  <br>
+  <br>
+  <input class="btn btn-default" type="button" ng-click="enregistrer()" value="Enregister les changements"/>
+  <input class="btn btn-default" type="button" ng-click="annuler()"value="Annuler"/>
+</div>

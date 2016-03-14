@@ -1,0 +1,13 @@
+<div align="center" ng-controller="RecupMDPCtrl">
+	<h3>Récuper votre mot de passe</h3>
+	<br>
+	Entrez votre code utilisateur.<br>
+	Nous vous enverrons un courriel contenant votre mot de passe.
+	<br>
+	<br>
+	Code utilisateur: <input type="text" ng-model="codeU"/>
+	<br>
+	<br>
+	<input class="btn btn-default" type="button" ng-click="recupMDP()" value="Envoyer"/>
+	<input class="btn btn-default" type="button" ng-click="annuler()" value="Annuler"/>
+</div>

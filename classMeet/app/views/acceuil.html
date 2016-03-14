@@ -1,0 +1,19 @@
+<div ng-include="'views/menu/menu.html'"></div>
+<div ng-controller="AcceuilCtrl">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Sigle</th>
+        <th>Titre</th>
+        <th>Groupe</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="disable-text-selection" ng-repeat="cour in listeCours">
+        <td>{{cour.sigle}}</td>
+        <td>{{cour.titre}}</td>
+        <td>Gr.{{cour.groupe}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
