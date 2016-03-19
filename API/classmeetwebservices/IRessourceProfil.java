@@ -26,6 +26,6 @@ public interface IRessourceProfil {
 	/**
 	 * url: localhost:7001/ClassMeet/v1/profils/{codeUtilisateur}/messages
 	 */
-	public Response getListeMessageParProfil(String codeUtilisateur);
+/*	public Response getListeMessageParProfil(String codeUtilisateur); */
 
 }

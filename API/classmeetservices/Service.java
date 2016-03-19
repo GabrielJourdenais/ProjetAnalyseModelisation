@@ -54,7 +54,7 @@ public class Service implements IClassMeetService {
 			return null;
 		}
 	}
-
+/*
 	@Override
 	public List<Message> getListeMessageParProfil(String codeUtilisateur) {
 		try {
@@ -63,5 +63,5 @@ public class Service implements IClassMeetService {
 			return null;
 		}
 	}
-
+*/
 }

@@ -29,6 +29,6 @@ public interface IProfilDAO {
 	 * @param codeUtilisateur
 	 * @return La liste des messages de l'utilisateur sélectionné
 	 */
-	public List<Message> getListeMessageParProfil(String codeUtilisateur);
+	/* public List<Message> getListeMessageParProfil(String codeUtilisateur); */
 
 }

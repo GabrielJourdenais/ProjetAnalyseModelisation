@@ -37,9 +37,9 @@ public class RessourceProfil implements IRessourceProfil {
 	public Response getListeProfil() {
 		List<Utilisateur> utilisateurs;
 		try {
-		//	utilisateurs = service.getListeProfil();
-			 utilisateurs = new ArrayList<Utilisateur>();
-			 utilisateurs.add(new Utilisateur("", "", "", "", ""));
+		utilisateurs = service.getListeProfil();
+			 //utilisateurs = new ArrayList<Utilisateur>();
+			 //utilisateurs.add(new Utilisateur("", "", "", "", ""));
 			if ((utilisateurs == null) || (utilisateurs.isEmpty())) {
 				return Response.noContent().status(Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
 						.build();
@@ -93,6 +93,7 @@ public class RessourceProfil implements IRessourceProfil {
 		}
 	}
 
+	/*
 	@GET
 	@Path("Messages/{idUtilisateur}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -114,5 +115,5 @@ public class RessourceProfil implements IRessourceProfil {
 					.header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
-
+*/
 }

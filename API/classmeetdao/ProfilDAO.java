@@ -1,3 +1,4 @@
+
 package classmeetdao;
 
 import java.sql.ResultSet;
@@ -29,7 +30,7 @@ public class ProfilDAO implements IProfilDAO {
 	@Override
 	public List<Utilisateur> getListeProfil() {
 		String query = "select * from Utilisateur";
-	return this.jdbcTemplate.query(query, new UtilisateurMapper());
+		return this.jdbcTemplate.query(query, new UtilisateurMapper());
 	}
 
 	@Override
@@ -38,24 +39,19 @@ public class ProfilDAO implements IProfilDAO {
 		return this.jdbcTemplate.query(query, new CoursMapper());
 	}
 
-	@Override
-	public List<Message> getListeMessageParProfil(String codeUtilisateur) {
-		String query = "select * from Message where Message.codeUtilisateur = codeUtilisateur";
-		return this.jdbcTemplate.query(query, new MessageMapper());
-	}
-
+	/*
+	 * @Override public List<Message> getListeMessageParProfil(String
+	 * codeUtilisateur) { String query =
+	 * "select * from Message where Message.codeUtilisateur = codeUtilisateur";
+	 * return this.jdbcTemplate.query(query, new MessageMapper()); }
+	 */
 	public static final class UtilisateurMapper implements RowMapper<Utilisateur> {
 
 		@Override
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-		
-			Utilisateur utilisateur = new Utilisateur(
-					rs.getString("LIDM_CODE_UTILISATEUR"),
-					rs.getString("LIDM_MOT_DE_PASSE"),
-					rs.getString("LIDM_PRENOM"),
-					rs.getString("LIDM_NOM"),
-					rs.getString("LIDM_COURRIEL"));
+			Utilisateur utilisateur = new Utilisateur(rs.getString(1), rs.getString(2), rs.getString(3),
+					rs.getString(4), rs.getString(5));
 
 			return utilisateur;
 		}
@@ -66,30 +62,22 @@ public class ProfilDAO implements IProfilDAO {
 		@Override
 		public Cours mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-			Cours unCours = new Cours(
-					rs.getString("N1_SIGLE"),
-					rs.getString("N1_TITRE"),
-					SessionCours.valueOf(rs.getString("N1_SESSION")),
-					rs.getInt("N1_ANNEE"));
+			Cours unCours = new Cours(rs.getString(1), rs.getString(2), SessionCours.valueOf(rs.getString(3)),
+					rs.getInt(4));
 
 			return unCours;
 		}
 	}
 
-	public static final class MessageMapper implements RowMapper<Message> {
-
-		@Override
-		public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-			Message unMessage = new Message(rs.getInt("N1_ID_MESSAGE"),
-					rs.getString("N1_CODE_UTILISATEUR"),
-					rs.getString("N1_DE"),
-					rs.getString("N1_A"),
-					rs.getString("N1_OBJET"),
-					rs.getString("N1_TEXTE"));
-
-			return unMessage;
-		}
-	}
-
+	/*
+	 * public static final class MessageMapper implements RowMapper<Message> {
+	 * 
+	 * @Override public Message mapRow(ResultSet rs, int rowNum) throws
+	 * SQLException {
+	 * 
+	 * Message unMessage = new Message(rs.getInt(1), rs.getString(2),
+	 * rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+	 * 
+	 * return unMessage; } }
+	 */
 }
