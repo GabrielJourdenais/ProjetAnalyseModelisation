@@ -21,11 +21,18 @@ define([
 			}
 			else
  			{
-				AuthService.getAccessMock($scope.username,$scope.password).then(
+				AuthService.getAccess($scope.username,$scope.password).then(
 				function(data)
 				{
-					Session.setSession(data);
-					$window.location.href="/";
+					if(data.status==1)
+					{
+						Session.setSession(data);
+						$window.location.href="/";
+					}
+					else
+					{
+						alert("Votre code usager ou votre mot de passe est incorrect");
+					}
 				},
 				function(erreur)
 				{

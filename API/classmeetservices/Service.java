@@ -25,20 +25,9 @@ public class Service implements IClassMeetService {
 	}
 
 	@Override
-	public Utilisateur getListeProfilParId(String codeUtilisateur) {
-
-		List<Utilisateur> listeUtilisateur = dao.getListeProfil();
-		Utilisateur utilisateur;
+	public Utilisateur getProfilParId(String codeUtilisateur) {
 		try {
-			for (int i = 0; i < listeUtilisateur.size(); i++) {
-				if (listeUtilisateur.get(i).getCodeUtilisateur() == codeUtilisateur) {
-					utilisateur = new Utilisateur(listeUtilisateur.get(i).getCodeUtilisateur(),
-							listeUtilisateur.get(i).getMotDePasse(), listeUtilisateur.get(i).getPrenom(),
-							listeUtilisateur.get(i).getNom(), listeUtilisateur.get(i).getCourriel());
-					return utilisateur;
-				}
-			}
-			return null;
+			return dao.getProfilParId(codeUtilisateur);
 		} catch (Exception e) {
 
 			return null;

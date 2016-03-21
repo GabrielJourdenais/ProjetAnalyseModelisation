@@ -3,10 +3,12 @@ package classmeetdao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import apps.config.AppSpringConfigDatabase;
 import classmeetmodels.Cours;
@@ -30,13 +32,22 @@ public class ProfilDAO implements IProfilDAO {
 	@Override
 	public List<Utilisateur> getListeProfil() {
 		String query = "select * from Utilisateur";
-		return this.jdbcTemplate.query(query, new UtilisateurMapper());
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.query(query,namedParameters,new UtilisateurMapper());
+	}
+	@Override
+	public Utilisateur getProfilParId(String codeUtilisateur){
+		String query = "select * from Utilisateur where codeUtilisateur=:codeUtilisateur";
+		SqlParameterSource namedParameters = new MapSqlParameterSource("codeUtilisateur",
+				codeUtilisateur);
+		return this.jdbcTemplate.queryForObject(query,namedParameters,new UtilisateurMapper());
 	}
 
 	@Override
 	public List<Cours> getListeCoursParProfil(String codeUtilisateur) {
-		String query = "select Cours.sigle, Cours.titre, GroupeCours.session, GroupeCours.annee from EtudiantGroupeCours join GroupeCours on GroupeCours.noGroupeCours = EtudiantGroupeCours.noGroupeCours join Cours on Cours.sigle = EtudiantGroupeCours.sigle where EtudiantGroupeCours.codePermanent = codeUtilisateur";
-		return this.jdbcTemplate.query(query, new CoursMapper());
+		String query = "select Cours.sigle, Cours.titre, GroupeCours.session, GroupeCours.annee from EtudiantGroupeCours,GroupeCours,Cours where GroupeCours.noGroupeCours = EtudiantGroupeCours.noGroupeCours and Cours.sigle = EtudiantGroupeCours.sigle and EtudiantGroupeCours.codePermanent = "+codeUtilisateur;
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.query(query,namedParameters,new CoursMapper());
 	}
 
 	/*

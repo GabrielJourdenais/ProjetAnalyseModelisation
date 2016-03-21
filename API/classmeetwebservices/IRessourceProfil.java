@@ -12,9 +12,9 @@ public interface IRessourceProfil {
 	/**
 	 * url: localhost:7001/ClassMeet/v1/profils/{codeUtilsateur}
 	 * 
-	 * @pathParam codeUtilsateur
+	 * @pathParam codeUtilisateur
 	 */
-	public Response getListeProfilParId(String codeUtilisateur);
+	public Response getProfilParId(String codeUtilisateur);
 
 	/**
 	 * url: localhost:7001/ClassMeet/v1/profils/{codeUtilsateur}/cours

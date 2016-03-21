@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -37,7 +38,7 @@ public class RessourceProfil implements IRessourceProfil {
 	public Response getListeProfil() {
 		List<Utilisateur> utilisateurs;
 		try {
-		utilisateurs = service.getListeProfil();
+			utilisateurs = service.getListeProfil();
 			 //utilisateurs = new ArrayList<Utilisateur>();
 			 //utilisateurs.add(new Utilisateur("", "", "", "", ""));
 			if ((utilisateurs == null) || (utilisateurs.isEmpty())) {
@@ -52,12 +53,12 @@ public class RessourceProfil implements IRessourceProfil {
 	}
 
 	@GET
-	@Path("/{idUtilisateur}")
+	@Path("/{codeUtilisateur}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public Response getListeProfilParId(@QueryParam("codeUtilisateur") String codeUtilisateur) {
+	public Response getProfilParId(@PathParam("codeUtilisateur") String codeUtilisateur) {
 		try {
-			Utilisateur utilisateur = service.getListeProfilParId(codeUtilisateur);
+			Utilisateur utilisateur = service.getProfilParId(codeUtilisateur);
 			// utilisateur = new Utilisateur("", "", "", "", ""));
 
 			if (utilisateur == null) {
@@ -72,10 +73,10 @@ public class RessourceProfil implements IRessourceProfil {
 	}
 
 	@GET
-	@Path("Cours/{idUtilisateur}")
+	@Path("{codeUtilisateur}/cours")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public Response getListeCoursParProfil(@QueryParam("codeUtilisateur") String codeUtilisateur) {
+	public Response getListeCoursParProfil(@PathParam("codeUtilisateur") String codeUtilisateur) {
 		List<Cours> listeCours;
 		try {
 			listeCours = service.getListeCoursParProfil(codeUtilisateur);

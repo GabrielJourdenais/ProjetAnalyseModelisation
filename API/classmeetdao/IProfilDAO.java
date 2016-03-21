@@ -12,6 +12,11 @@ public interface IProfilDAO {
 	 * Fonction qui retourne la liste des profil de tous les utilisateur.
 	 */
 	public List<Utilisateur> getListeProfil();
+	
+	/**
+	 * Fonction qui retourne la liste un profil utilisateur en fonction de son code utilisateur.
+	 */
+	public Utilisateur getProfilParId(String codeUtilisateur);
 
 	/**
 	 * Fonction qui retourne la liste des cours de l'utilisateur dont le ID est

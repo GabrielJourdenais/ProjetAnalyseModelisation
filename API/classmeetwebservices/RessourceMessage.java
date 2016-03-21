@@ -16,7 +16,7 @@ import classmeetmodels.Message;
 import classmeetservices.IMessageService;
 import classmeetservices.MessageService;
 
-@Path("profils")
+@Path("messages")
 public class RessourceMessage implements IRessourceMessage {
 
 	private final IMessageService service;
@@ -30,7 +30,7 @@ public class RessourceMessage implements IRessourceMessage {
 	}
 
 	@GET
-	@Path("Messages/{idUtilisateur}")
+	@Path("{idUtilisateur}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
 	public Response getListeMessageParProfil(@QueryParam("codeUtilisateur") String codeUtilisateur) {

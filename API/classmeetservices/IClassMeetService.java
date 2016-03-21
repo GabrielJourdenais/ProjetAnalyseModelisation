@@ -20,7 +20,7 @@ public interface IClassMeetService {
 	 * @param codeUtilisateur
 	 * @return L'utilisateur sélectionné
 	 */
-	public Utilisateur getListeProfilParId(String codeUtilisateur);
+	public Utilisateur getProfilParId(String codeUtilisateur);
 
 	/**
 	 * Cette fonction retourne la liste des cours d'un utilisateur dont le ID

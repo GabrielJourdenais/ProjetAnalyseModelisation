@@ -5,21 +5,21 @@ define([
 	var app=ng.module('classMeetApp.authService',[
 	'ngCookies'
 	])
-	.factory('AuthService', function($q) {
+	.factory('AuthService', function($q,$http) {
 		var service={};
 		service.getAccess=function(username,password){
 			var defer=$q.defer();
 			$http({
 				method: 'POST',
-				url: '/api/access/',
+				url: 'http://localhost/authuqam/service/authentification.php',
 				data: {
-					username:username,
+					user:username,
 					password:password
 				}
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
-				defer.reject("Votre code usager ou votre mot de passe est incorrect");
+				defer.reject("La connection au serveur a échoué");
 			});
 			return defer.promise;
 		}
