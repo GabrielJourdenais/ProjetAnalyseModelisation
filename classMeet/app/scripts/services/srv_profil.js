@@ -3,13 +3,13 @@ define([
 ], function (ng) {
 	var app=ng.module('classMeetApp.profilService',[
 	])
-	.factory('ProfilService', function($q) {
+	.factory('ProfilService', function($q,$http) {
 		var service={};
 		service.getCours=function(username){
 			var defer=$q.defer();
 			$http({
 				method: 'GET',
-				url: '/api/profils/'+username+'cours',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'cours',
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
@@ -21,7 +21,7 @@ define([
 			var defer=$q.defer();
 			$http({
 				method: 'GET',
-				url: '/api/profils/'+username,
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username,
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
@@ -29,13 +29,14 @@ define([
 			});
 			return defer.promise;
 		}
-		service.addProfil=function(username){
+		service.addProfil=function(profil){
 			var defer=$q.defer();
 			$http({
 				method: 'POST',
-				url: '/api/profils/'+username,
+				url: 'http://localhost:7001/ClassMeet/v1/profils',
+				data: profil
 			}).then(function successCallback(response) {
-				defer.resolve("Votre compte a été créé avec succès");
+				defer.resolve(response.data);
 			}, function errorCallback(response) {
 				defer.reject("La requête a échoué");
 			});
@@ -45,7 +46,7 @@ define([
 			var defer=$q.defer();
 			$http({
 				method: 'PUT',
-				url: '/api/profils/'+username,
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username,
 			}).then(function successCallback(response) {
 				defer.resolve("Votre compte a été modifié avec succès");
 			}, function errorCallback(response) {
@@ -59,6 +60,19 @@ define([
 			return defer.promise;
 		}
 		return service;
+	})
+	.factory('Profil', function($q,$cookies) {
+		var profilCookie={};
+		profilCookie.setProfilCourant=function(profil){
+			$cookies.put("profil",profil);
+		}
+		profilCookie.getProfilCourant=function(){
+			return $cookies.get("profil");
+		}
+		profilCookie.deleteProfilCourant=function(){
+			$cookies.remove("profil");
+		}
+		return profilCookie;
 	})
 	return app;
 })

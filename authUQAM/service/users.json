@@ -1,19 +1,18 @@
 {
-    "test": {
+    "JOUG08108901": {
         "password": "qwerty",
         "courriel": "test@uqam.courrier.ca",
-        "prenom": "Utilisateur",
-        "nom": "Test",
-        "codepermanent": "TEST00000000",
-        "codems": "bb000000"
+        "prenom": "Gabriel",
+        "nom": "Jourdenais Hamel",
+        "codepermanent": "JOUG08108901",
+        "codems": "gh091122"
     },
-"test2": {
+    "JOUG": {
         "password": "qwerty",
         "courriel": "test@uqam.courrier.ca",
-        "prenom": "Utilisateur",
-        "nom": "Test",
-        "codepermanent": "TEST00000000",
-        "codems": "bb000000"
+        "prenom": "Gabriel",
+        "nom": "Jourdenais Hamel",
+        "codepermanent": "JOUG08108901",
+        "codems": "gh091122"
     }
-
 }
