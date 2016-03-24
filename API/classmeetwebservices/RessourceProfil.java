@@ -3,12 +3,16 @@ package classmeetwebservices;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -16,6 +20,7 @@ import classmeetdao.ProfilDAO;
 import classmeetmodels.Cours;
 import classmeetmodels.Message;
 import classmeetmodels.Utilisateur;
+import classmeetmodels.MessageStatus;
 import classmeetservices.IClassMeetService;
 import classmeetservices.Service;
 
@@ -46,6 +51,30 @@ public class RessourceProfil implements IRessourceProfil {
 						.build();
 			}
 			return Response.ok(Status.ACCEPTED).entity(utilisateurs).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	@OPTIONS
+	public Response addProfilPreflight(){
+		return Response.noContent()
+					.header("Access-Control-Allow-Origin","*")
+					.header("Access-Control-Allow-Methods","GET,POST")
+					.header("Access-Control-Allow-Headers","accept,content-type")
+					.header("Access-Control-Max-Age",600).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response addProfil(Utilisateur nouvUtilisateur) {
+		MessageStatus status;
+		try {
+			status = new MessageStatus(service.addProfil(nouvUtilisateur));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
 					.header("Access-Control-Allow-Origin", "*").build();

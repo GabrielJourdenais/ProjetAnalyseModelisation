@@ -30,6 +30,11 @@ public interface IClassMeetService {
 	 * @return La liste des cours de l'utilisateur sélectionné
 	 */
 	public List<Cours> getListeCoursParProfil(String codeUtilisateur);
+	
+	/**
+	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le status de la requête.
+	 */
+	public int addProfil(Utilisateur nouvUtilisateur);
 
 	/**
 	 * Fonction qui retourne la liste des message de l'utilisateur dont le ID

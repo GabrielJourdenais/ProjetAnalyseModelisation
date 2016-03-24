@@ -49,6 +49,19 @@ public class ProfilDAO implements IProfilDAO {
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.query(query,namedParameters,new CoursMapper());
 	}
+	
+	@Override
+	public int addProfil(Utilisateur nouvUtilisateur){
+		String query = "insert into Utilisateur values("+
+				"'"+nouvUtilisateur.getCodeUtilisateur()+"',"+
+				"'"+nouvUtilisateur.getMotDePasse()+"',"+
+				"'"+nouvUtilisateur.getPrenom()+"',"+
+				"'"+nouvUtilisateur.getNom()+"',"+
+				"'"+nouvUtilisateur.getCourriel()+"'"+
+				")";
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.update(query,namedParameters);
+	}
 
 	/*
 	 * @Override public List<Message> getListeMessageParProfil(String

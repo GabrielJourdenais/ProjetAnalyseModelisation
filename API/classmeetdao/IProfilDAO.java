@@ -28,6 +28,11 @@ public interface IProfilDAO {
 	public List<Cours> getListeCoursParProfil(String codeUtilisateur);
 
 	/**
+	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le nombre de ligne affectées.
+	 */
+	public int addProfil(Utilisateur nouvUtilisateur);
+	
+	/**
 	 * Fonction qui retourne la liste des messages de l'utilisateur dont le ID
 	 * est passé en paramètre.
 	 * 

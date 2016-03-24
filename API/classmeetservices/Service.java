@@ -43,6 +43,24 @@ public class Service implements IClassMeetService {
 			return null;
 		}
 	}
+	
+	@Override
+	public int addProfil(Utilisateur nouvUtilisateur) {
+		try {
+			int nbLighe=dao.addProfil(nouvUtilisateur);
+			if(nbLighe>0)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 /*
 	@Override
 	public List<Message> getListeMessageParProfil(String codeUtilisateur) {
