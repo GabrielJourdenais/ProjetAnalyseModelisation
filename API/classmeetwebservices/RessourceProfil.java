@@ -81,8 +81,26 @@ public class RessourceProfil implements IRessourceProfil {
 	}
 
 	@OPTIONS
-	@Path("/cours")
-	public Response addCoursPreflight() {
+	@Path("{codeUtilisateur}/cours")
+	public Response addCoursTableCoursPreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+
+	@OPTIONS
+	@Path("{codeUtilisateur}/cours")
+	public Response addCoursTableGroupeCoursPreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+
+	@OPTIONS
+	@Path("{codeUtilisateur}/cours")
+	public Response addCoursTableEtudiantGroupeCoursPreflight() {
 		return Response.noContent().header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET,POST")
 				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
@@ -90,14 +108,46 @@ public class RessourceProfil implements IRessourceProfil {
 	}
 
 	@POST
-	@Path("/cours")
+	@Path("{codeUtilisateur}/cours")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public Response addCours(Cours nouvCours) {
+	public Response addCoursTableCours(Cours nouvCours, @PathParam("codeUtilisateur") String codeUtilisateur) {
 		MessageStatus status;
 		try {
-			status = new MessageStatus(service.addCours(nouvCours));
+			status = new MessageStatus(service.addCoursTableCours(nouvCours, codeUtilisateur));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+
+	@POST
+	@Path("{codeUtilisateur}/cours")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response addCoursTableGroupeCours(Cours nouvCours, @PathParam("codeUtilisateur") String codeUtilisateur) {
+		MessageStatus status;
+		try {
+			status = new MessageStatus(service.addCoursTableGroupeCours(nouvCours, codeUtilisateur));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+
+	@POST
+	@Path("{codeUtilisateur}/cours")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response addCoursTableEtudiantGroupeCours(Cours nouvCours, @PathParam("codeUtilisateur") String codeUtilisateur) {
+		MessageStatus status;
+		try {
+			status = new MessageStatus(service.addCoursTableEtudiantGroupeCours(nouvCours, codeUtilisateur));
 			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")

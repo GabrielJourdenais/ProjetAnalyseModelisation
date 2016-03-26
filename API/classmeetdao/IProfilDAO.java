@@ -35,11 +35,23 @@ public interface IProfilDAO {
 	public int addProfil(Utilisateur nouvUtilisateur);
 
 	/**
-	 * Fonction qui ajoute un nouveau cours puis retourne le nombre
-	 * de ligne affectées.
+	 * Fonction qui ajoute un nouveau cours dans la table Cours puis retourne le
+	 * nombre de ligne affectées.
 	 */
-	public int addCours(Cours nouvCours);
-	
+	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur);
+
+	/**
+	 * Fonction qui ajoute un nouveau cours dans la table GroupeCours puis
+	 * retourne le nombre de ligne affectées.
+	 */
+	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur);
+
+	/**
+	 * Fonction qui ajoute un nouveau cours dans la table EtudiantGroupeCours
+	 * puis retourne le nombre de ligne affectées.
+	 */
+	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur);
+
 	/**
 	 * Fonction qui retourne la liste des messages de l'utilisateur dont le ID
 	 * est passé en paramètre.
@@ -50,8 +62,8 @@ public interface IProfilDAO {
 	public List<Message> getListeMessageParProfil(String codeUtilisateur);
 
 	/**
-	 * Fonction qui met à jour un profil utilisateur puis retourne le nombre
-	 * de ligne affectées.
+	 * Fonction qui met à jour un profil utilisateur puis retourne le nombre de
+	 * ligne affectées.
 	 */
 	public int updateProfil(Utilisateur nouvUtilisateur, String codeUtilisateur);
 }

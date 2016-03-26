@@ -47,8 +47,8 @@ public class Service implements IClassMeetService {
 	@Override
 	public int addProfil(Utilisateur nouvUtilisateur) {
 		try {
-			int nbLighe = dao.addProfil(nouvUtilisateur);
-			if (nbLighe > 0) {
+			int nbLigne = dao.addProfil(nouvUtilisateur);
+			if (nbLigne > 0) {
 				return 1;
 			} else {
 				return 0;
@@ -60,10 +60,41 @@ public class Service implements IClassMeetService {
 	}
 
 	@Override
-	public int addCours(Cours nouvCours) {
+	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur) {
 		try {
-			int nbLighe = dao.addCours(nouvCours);
-			if (nbLighe > 0) {
+			int nbLigne = dao.addCoursTableCours(nouvCours);
+			if (nbLigne > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
+	@Override
+	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur) {
+		try {
+
+			int nbLigne = dao.addCoursTableGroupeCours(nouvCours);
+			if (nbLigne > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
+	@Override
+	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur) {
+		try {
+			int nbLigne = dao.addCoursTableEtudiantGroupeCours(nouvCours);
+			if (nbLigne > 0) {
 				return 1;
 			} else {
 				return 0;

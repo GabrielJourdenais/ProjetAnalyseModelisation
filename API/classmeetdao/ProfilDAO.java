@@ -64,20 +64,33 @@ public class ProfilDAO implements IProfilDAO {
 	}
 
 	@Override
-	public int addCours(Cours nouvCours) {
+	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur) {
 		String queryCours = "insert into Cours values(" + "'" + nouvCours.getSigle() + "'," + "'" + nouvCours.getTitre()
 				+ "'" + ")";
+
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.update(queryCours, namedParameters);
+	}
+
+	@Override
+	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur) {
 
 		String queryGroupeCours = "insert into GroupeCours values(" + nouvCours.getNoGroupeCours() + "," + "'"
 				+ nouvCours.getSession() + "'," + nouvCours.getAnnee() + "," + "'" + nouvCours.getCodeUtilisateur()
 				+ "'," + "'" + nouvCours.getSigle() + "'" + ")";
 
-		String queryEtudiantGroupeCours = "insert into EtudiantGroupeCours values(" + "'"
-				+ nouvCours.getCodeUtilisateur() + "'," + nouvCours.getNoGroupeCours() + "," + "'"
-				+ nouvCours.getSigle() + "'" + ")";
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.update(queryGroupeCours, namedParameters);
+	}
+
+	@Override
+	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur) {
+
+		String queryEtudiantGroupeCours = "insert into EtudiantGroupeCours values(" + "'" + codeUtilisateur + "',"
+				+ nouvCours.getNoGroupeCours() + "," + "'" + nouvCours.getSigle() + "'" + ")";
 
 		SqlParameterSource namedParameters = null;
-		return this.jdbcTemplate.update(queryCours, namedParameters);
+		return this.jdbcTemplate.update(queryEtudiantGroupeCours, namedParameters);
 	}
 
 	@Override

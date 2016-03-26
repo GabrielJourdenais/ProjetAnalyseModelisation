@@ -38,11 +38,23 @@ public interface IClassMeetService {
 	public int addProfil(Utilisateur nouvUtilisateur);
 
 	/**
-	 * Fonction qui ajoute un nouveau cours puis retourne le status
+	 * Fonction qui ajoute un nouveau cours dans la table Cours puis retourne le status
 	 * de la requête.
 	 */
-	public int addCours(Cours nouvCours);
+	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur);
 
+	/**
+	 * Fonction qui ajoute un nouveau cours dans la table GroupeCours puis retourne le status
+	 * de la requête.
+	 */
+	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur);
+
+	/**
+	 * Fonction qui ajoute un nouveau cours dans la table EtudiantGroupeCours puis retourne le status
+	 * de la requête.
+	 */
+	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur);
+	
 	/**
 	 * Fonction qui retourne la liste des message de l'utilisateur dont le ID
 	 * est passé en paramètre.

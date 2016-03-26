@@ -33,12 +33,24 @@ public interface IRessourceProfil {
 	public Response addProfil(Utilisateur nouvUtilisateur);
 
 	/**
-	 * @POST url: localhost:7001/ClassMeet/v1/cours
+	 * @POST url: localhost:7001/ClassMeet/v1/{codeUtilisateur}/cours
 	 * @return Response
 	 */
-	public Response addCours(Cours nouvCours);
+	public Response addCoursTableCours(Cours nouvCours, String codeUtilisateur);
 
-		/**
+	/**
+	 * @POST url: localhost:7001/ClassMeet/v1/{codeUtilisateur}/cours
+	 * @return Response
+	 */
+	public Response addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur);
+
+	/**
+	 * @POST url: localhost:7001/ClassMeet/v1/{codeUtilisateur}/cours
+	 * @return Response
+	 */
+	public Response addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur);
+
+	/**
 	 * url: localhost:7001/ClassMeet/v1/profils/{codeUtilisateur}/messages
 	 */
 	public Response getListeMessageParProfil(String codeUtilisateur);
