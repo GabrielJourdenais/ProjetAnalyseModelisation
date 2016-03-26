@@ -12,9 +12,10 @@ public interface IProfilDAO {
 	 * Fonction qui retourne la liste des profil de tous les utilisateur.
 	 */
 	public List<Utilisateur> getListeProfil();
-	
+
 	/**
-	 * Fonction qui retourne la liste un profil utilisateur en fonction de son code utilisateur.
+	 * Fonction qui retourne la liste un profil utilisateur en fonction de son
+	 * code utilisateur.
 	 */
 	public Utilisateur getProfilParId(String codeUtilisateur);
 
@@ -28,9 +29,16 @@ public interface IProfilDAO {
 	public List<Cours> getListeCoursParProfil(String codeUtilisateur);
 
 	/**
-	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le nombre de ligne affectées.
+	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le nombre
+	 * de ligne affectées.
 	 */
 	public int addProfil(Utilisateur nouvUtilisateur);
+
+	/**
+	 * Fonction qui ajoute un nouveau cours puis retourne le nombre
+	 * de ligne affectées.
+	 */
+	public int addCours(Cours nouvCours);
 	
 	/**
 	 * Fonction qui retourne la liste des messages de l'utilisateur dont le ID
@@ -39,6 +47,11 @@ public interface IProfilDAO {
 	 * @param codeUtilisateur
 	 * @return La liste des messages de l'utilisateur sélectionné
 	 */
-	/* public List<Message> getListeMessageParProfil(String codeUtilisateur); */
+	public List<Message> getListeMessageParProfil(String codeUtilisateur);
 
+	/**
+	 * Fonction qui met à jour un profil utilisateur puis retourne le nombre
+	 * de ligne affectées.
+	 */
+	public int updateProfil(Utilisateur nouvUtilisateur, String codeUtilisateur);
 }

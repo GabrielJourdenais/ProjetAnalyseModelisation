@@ -6,6 +6,8 @@ public class Cours {
 	private String titre;
 	private SessionCours session;
 	private int annee;
+	private int noGroupeCours;
+	private String codeUtilisateur;
 
 	public Cours() {
 		super();
@@ -13,6 +15,8 @@ public class Cours {
 		this.titre = "";
 		this.session = SessionCours.H;
 		this.annee = 0;
+		this.noGroupeCours = 0;
+		this.codeUtilisateur = "";
 	}
 
 	/**
@@ -20,13 +24,18 @@ public class Cours {
 	 * @param titre
 	 * @param session
 	 * @param annee
+	 * @param noGroupeCours
+	 * @param codeUtilisateur
 	 */
-	public Cours(String sigle, String titre, SessionCours session, int annee) {
+	public Cours(String sigle, String titre, SessionCours session, int annee, int noGroupeCours,
+			String codeUtilisateur) {
 		super();
 		this.sigle = sigle;
 		this.titre = titre;
 		this.session = session;
 		this.annee = annee;
+		this.noGroupeCours = noGroupeCours;
+		this.codeUtilisateur = codeUtilisateur;
 	}
 
 	/**
@@ -90,6 +99,36 @@ public class Cours {
 	}
 
 	/**
+	 * @return the noGroupeCours
+	 */
+	public int getNoGroupeCours() {
+		return noGroupeCours;
+	}
+
+	/**
+	 * @param noGroupeCours
+	 *            the noGroupeCours to set
+	 */
+	public void setNoGroupeCours(int noGroupeCours) {
+		this.noGroupeCours = noGroupeCours;
+	}
+
+	/**
+	 * @return the codeUtilisateur
+	 */
+	public String getCodeUtilisateur() {
+		return codeUtilisateur;
+	}
+
+	/**
+	 * @param codeUtilisateur
+	 *            the codeUtilisateur to set
+	 */
+	public void setCodeUtilisateur(String codeUtilisateur) {
+		this.codeUtilisateur = codeUtilisateur;
+	}
+
+	/**
 	 * @param obj
 	 */
 	@Override
@@ -105,6 +144,16 @@ public class Cours {
 		}
 		Cours other = (Cours) obj;
 		if (annee != other.annee) {
+			return false;
+		}
+		if (codeUtilisateur == null) {
+			if (other.codeUtilisateur != null) {
+				return false;
+			}
+		} else if (!codeUtilisateur.equals(other.codeUtilisateur)) {
+			return false;
+		}
+		if (noGroupeCours != other.noGroupeCours) {
 			return false;
 		}
 		if (session != other.session) {
@@ -127,14 +176,10 @@ public class Cours {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Cours [sigle=" + sigle + ", titre=" + titre + ", session=" + session + ", annee=" + annee + "]";
+		return "Cours [sigle=" + sigle + ", titre=" + titre + ", session=" + session + ", annee=" + annee
+				+ ", noGroupeCours=" + noGroupeCours + ", codeUtilisateur=" + codeUtilisateur + "]";
 	}
 
 }

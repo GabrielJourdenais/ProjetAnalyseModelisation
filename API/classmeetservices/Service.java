@@ -43,17 +43,14 @@ public class Service implements IClassMeetService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public int addProfil(Utilisateur nouvUtilisateur) {
 		try {
-			int nbLighe=dao.addProfil(nouvUtilisateur);
-			if(nbLighe>0)
-			{
+			int nbLighe = dao.addProfil(nouvUtilisateur);
+			if (nbLighe > 0) {
 				return 1;
-			}
-			else
-			{
+			} else {
 				return 0;
 			}
 
@@ -61,7 +58,22 @@ public class Service implements IClassMeetService {
 			return 0;
 		}
 	}
-/*
+
+	@Override
+	public int addCours(Cours nouvCours) {
+		try {
+			int nbLighe = dao.addCours(nouvCours);
+			if (nbLighe > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
 	@Override
 	public List<Message> getListeMessageParProfil(String codeUtilisateur) {
 		try {
@@ -70,5 +82,20 @@ public class Service implements IClassMeetService {
 			return null;
 		}
 	}
-*/
+
+	@Override
+	public int updateProfil(Utilisateur nouvUtilisateur, String codeUtilisateur) {
+		try {
+			int nbLighe = dao.updateProfil(nouvUtilisateur, codeUtilisateur);
+			if (nbLighe > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+
 }

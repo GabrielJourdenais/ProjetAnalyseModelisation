@@ -30,11 +30,18 @@ public interface IClassMeetService {
 	 * @return La liste des cours de l'utilisateur sélectionné
 	 */
 	public List<Cours> getListeCoursParProfil(String codeUtilisateur);
-	
+
 	/**
-	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le status de la requête.
+	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le status
+	 * de la requête.
 	 */
 	public int addProfil(Utilisateur nouvUtilisateur);
+
+	/**
+	 * Fonction qui ajoute un nouveau cours puis retourne le status
+	 * de la requête.
+	 */
+	public int addCours(Cours nouvCours);
 
 	/**
 	 * Fonction qui retourne la liste des message de l'utilisateur dont le ID
@@ -43,6 +50,11 @@ public interface IClassMeetService {
 	 * @param codeUtilisateur
 	 * @return La liste des messages de l'utilisateur sélectionné.
 	 */
-/*	public List<Message> getListeMessageParProfil(String codeUtilisateur); */
+	public List<Message> getListeMessageParProfil(String codeUtilisateur);
 
+	/**
+	 * Fonction qui met à jour un profil utilisateur puis retourne le status
+	 * de la requête.
+	 */
+	public int updateProfil(Utilisateur nouvUtilisateur, String codeUtilisateur);
 }
