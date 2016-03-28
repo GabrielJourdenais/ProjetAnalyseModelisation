@@ -3,6 +3,7 @@ package classmeetdao;
 import java.util.List;
 
 import classmeetmodels.Cours;
+import classmeetmodels.CoursTemp;
 import classmeetmodels.Message;
 import classmeetmodels.Utilisateur;
 
@@ -26,7 +27,7 @@ public interface IProfilDAO {
 	 * @param codeUtilisateur
 	 * @return La liste des cours de l'utilisateur sélectionné
 	 */
-	public List<Cours> getListeCoursParProfil(String codeUtilisateur);
+	public List<CoursTemp> getListeCoursParProfil(String codeUtilisateur);
 
 	/**
 	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le nombre
@@ -38,19 +39,8 @@ public interface IProfilDAO {
 	 * Fonction qui ajoute un nouveau cours dans la table Cours puis retourne le
 	 * nombre de ligne affectées.
 	 */
-	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur);
+	public int addCours(Cours nouvCours, String codeUtilisateur);
 
-	/**
-	 * Fonction qui ajoute un nouveau cours dans la table GroupeCours puis
-	 * retourne le nombre de ligne affectées.
-	 */
-	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur);
-
-	/**
-	 * Fonction qui ajoute un nouveau cours dans la table EtudiantGroupeCours
-	 * puis retourne le nombre de ligne affectées.
-	 */
-	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur);
 
 	/**
 	 * Fonction qui retourne la liste des messages de l'utilisateur dont le ID

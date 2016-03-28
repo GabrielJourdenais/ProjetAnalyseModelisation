@@ -3,6 +3,7 @@ package classmeetservices;
 import java.util.List;
 
 import classmeetmodels.Cours;
+import classmeetmodels.CoursTemp;
 import classmeetmodels.Message;
 import classmeetmodels.Utilisateur;
 
@@ -29,7 +30,7 @@ public interface IClassMeetService {
 	 * @param codeUtilisateur
 	 * @return La liste des cours de l'utilisateur sélectionné
 	 */
-	public List<Cours> getListeCoursParProfil(String codeUtilisateur);
+	public List<CoursTemp> getListeCoursParProfil(String codeUtilisateur);
 
 	/**
 	 * Fonction qui ajoute un nouveau profil utilisateur puis retourne le status
@@ -41,19 +42,8 @@ public interface IClassMeetService {
 	 * Fonction qui ajoute un nouveau cours dans la table Cours puis retourne le status
 	 * de la requête.
 	 */
-	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur);
+	public int addCours(Cours nouvCours, String codeUtilisateur);
 
-	/**
-	 * Fonction qui ajoute un nouveau cours dans la table GroupeCours puis retourne le status
-	 * de la requête.
-	 */
-	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur);
-
-	/**
-	 * Fonction qui ajoute un nouveau cours dans la table EtudiantGroupeCours puis retourne le status
-	 * de la requête.
-	 */
-	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur);
 	
 	/**
 	 * Fonction qui retourne la liste des message de l'utilisateur dont le ID

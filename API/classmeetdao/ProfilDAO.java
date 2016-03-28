@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import apps.config.AppSpringConfigDatabase;
 import classmeetmodels.Cours;
+import classmeetmodels.CoursTemp;
 import classmeetmodels.Message;
 import classmeetmodels.SessionCours;
 import classmeetmodels.Utilisateur;
@@ -43,13 +44,13 @@ public class ProfilDAO implements IProfilDAO {
 	}
 
 	@Override
-	public List<Cours> getListeCoursParProfil(String codeUtilisateur) {
+	public List<CoursTemp> getListeCoursParProfil(String codeUtilisateur) {
 		String query = "select Cours.sigle, Cours.titre, GroupeCours.session,"
 				+ " GroupeCours.annee, GroupeCours.noGroupeCours, GroupeCours.enseignant"
-				+ " from EtudiantGroupeCours,GroupeCours,Cours"
-				+ " where GroupeCours.noGroupeCours = EtudiantGroupeCours.noGroupeCours"
-				+ " and Cours.sigle = EtudiantGroupeCours.sigle" + " and EtudiantGroupeCours.codePermanent = "
-				+ codeUtilisateur;
+				+ " from UtilisateurGroupeCours,GroupeCours,Cours"
+				+ " where GroupeCours.noGroupeCours = UtilisateurGroupeCours.noGroupeCours"
+				+ " and Cours.sigle = UtilisateurGroupeCours.sigle" + " and UtilisateurGroupeCours.codePermanent = '"
+				+ codeUtilisateur +"'";
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.query(query, namedParameters, new CoursMapper());
 	}
@@ -58,39 +59,27 @@ public class ProfilDAO implements IProfilDAO {
 	public int addProfil(Utilisateur nouvUtilisateur) {
 		String query = "insert into Utilisateur values(" + "'" + nouvUtilisateur.getCodeUtilisateur() + "'," + "'"
 				+ nouvUtilisateur.getMotDePasse() + "'," + "'" + nouvUtilisateur.getPrenom() + "'," + "'"
-				+ nouvUtilisateur.getNom() + "'," + "'" + nouvUtilisateur.getCourriel() + "'" + ")";
+				+ nouvUtilisateur.getNom() + "'," + "'" + nouvUtilisateur.getCourriel() + "'," + "'" + nouvUtilisateur.getTypeUtilisateur() + "'" + ")";
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.update(query, namedParameters);
 	}
 
 	@Override
-	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur) {
+	public int addCours(Cours nouvCours, String codeUtilisateur) {
 		String queryCours = "insert into Cours values(" + "'" + nouvCours.getSigle() + "'," + "'" + nouvCours.getTitre()
 				+ "'" + ")";
 
-		SqlParameterSource namedParameters = null;
-		return this.jdbcTemplate.update(queryCours, namedParameters);
-	}
-
-	@Override
-	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur) {
-
 		String queryGroupeCours = "insert into GroupeCours values(" + nouvCours.getNoGroupeCours() + "," + "'"
-				+ nouvCours.getSession() + "'," + nouvCours.getAnnee() + "," + "'" + nouvCours.getCodeUtilisateur()
+				+ nouvCours.getSession() + "'," + nouvCours.getAnnee() + "," + "'" + nouvCours.getCodeEnseignant()
 				+ "'," + "'" + nouvCours.getSigle() + "'" + ")";
 
-		SqlParameterSource namedParameters = null;
-		return this.jdbcTemplate.update(queryGroupeCours, namedParameters);
-	}
-
-	@Override
-	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur) {
-
-		String queryEtudiantGroupeCours = "insert into EtudiantGroupeCours values(" + "'" + codeUtilisateur + "',"
+		String queryUtilisateurGroupeCours = "insert into UtilisateurGroupeCours values(" + "'" + codeUtilisateur + "',"
 				+ nouvCours.getNoGroupeCours() + "," + "'" + nouvCours.getSigle() + "'" + ")";
 
+		String transaction = "begin;" + queryCours + ";" + queryGroupeCours + ";" + queryUtilisateurGroupeCours + "; commit";
+		
 		SqlParameterSource namedParameters = null;
-		return this.jdbcTemplate.update(queryEtudiantGroupeCours, namedParameters);
+		return this.jdbcTemplate.update(transaction, namedParameters);
 	}
 
 	@Override
@@ -115,18 +104,18 @@ public class ProfilDAO implements IProfilDAO {
 		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 			Utilisateur utilisateur = new Utilisateur(rs.getString(1), rs.getString(2), rs.getString(3),
-					rs.getString(4), rs.getString(5));
+					rs.getString(4), rs.getString(5), rs.getString(6));
 
 			return utilisateur;
 		}
 	}
 
-	public static final class CoursMapper implements RowMapper<Cours> {
+	public static final class CoursMapper implements RowMapper<CoursTemp> {
 
 		@Override
-		public Cours mapRow(ResultSet rs, int rowNum) throws SQLException {
+		public CoursTemp mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-			Cours unCours = new Cours(rs.getString(1), rs.getString(2), SessionCours.valueOf(rs.getString(3)),
+			CoursTemp unCours = new CoursTemp(rs.getString(1), rs.getString(2), ""/*SessionCours.AvalueOf(rs.getString(3))*/,
 					rs.getInt(4), rs.getInt(5), rs.getString(6));
 
 			return unCours;

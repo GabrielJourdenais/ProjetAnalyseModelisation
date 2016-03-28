@@ -4,6 +4,7 @@ import java.util.List;
 
 import classmeetdao.IProfilDAO;
 import classmeetmodels.Cours;
+import classmeetmodels.CoursTemp;
 import classmeetmodels.Message;
 import classmeetmodels.Utilisateur;
 
@@ -35,7 +36,7 @@ public class Service implements IClassMeetService {
 	}
 
 	@Override
-	public List<Cours> getListeCoursParProfil(String codeUtilisateur) {
+	public List<CoursTemp> getListeCoursParProfil(String codeUtilisateur) {
 		try {
 			return dao.getListeCoursParProfil(codeUtilisateur);
 
@@ -60,40 +61,9 @@ public class Service implements IClassMeetService {
 	}
 
 	@Override
-	public int addCoursTableCours(Cours nouvCours, String codeUtilisateur) {
+	public int addCours(Cours nouvCours, String codeUtilisateur) {
 		try {
-			int nbLigne = dao.addCoursTableCours(nouvCours);
-			if (nbLigne > 0) {
-				return 1;
-			} else {
-				return 0;
-			}
-
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-
-	@Override
-	public int addCoursTableGroupeCours(Cours nouvCours, String codeUtilisateur) {
-		try {
-
-			int nbLigne = dao.addCoursTableGroupeCours(nouvCours);
-			if (nbLigne > 0) {
-				return 1;
-			} else {
-				return 0;
-			}
-
-		} catch (Exception e) {
-			return 0;
-		}
-	}
-
-	@Override
-	public int addCoursTableEtudiantGroupeCours(Cours nouvCours, String codeUtilisateur) {
-		try {
-			int nbLigne = dao.addCoursTableEtudiantGroupeCours(nouvCours);
+					int nbLigne = dao.addCours(nouvCours, codeUtilisateur);
 			if (nbLigne > 0) {
 				return 1;
 			} else {
