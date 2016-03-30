@@ -15,11 +15,13 @@ if(isset($_POST['user']) && isset($_POST['password'])) {
         {
             if($password == $json[$user]['password']) {
                 $output['status'] = 1;
+                $output['type'] = $json[$user]['type'];
                 $output['courriel'] = $json[$user]['courriel'];
                 $output['prenom'] = $json[$user]['prenom'];
                 $output['nom'] = $json[$user]['nom'];
                 $output['codepermanent'] = $json[$user]['codepermanent'];
                 $output['codems'] = $json[$user]['codems'];
+                $output['groupecours'] = $json[$user]['groupecours'];
             }
         }
     }

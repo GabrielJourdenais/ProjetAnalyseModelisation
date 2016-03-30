@@ -5,7 +5,9 @@
         "prenom": "Utilisateur",
         "nom": "Test",
         "codepermanent": "TEST00000000",
-        "codems": "bb000000"
+        "codems": "bb000000",
+        "type": "etudiant",
+        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
     },
 "test2": {
         "password": "qwerty",
@@ -13,7 +15,9 @@
         "prenom": "Utilisateur",
         "nom": "Test",
         "codepermanent": "TEST00000000",
-        "codems": "bb000000"
+        "codems": "bb000000",
+        "type": "enseignant",
+        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
     }
 
 }
