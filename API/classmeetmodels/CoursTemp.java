@@ -1,19 +1,18 @@
 package classmeetmodels;
 
-public class Cours {
-
+public class CoursTemp {
 	private String sigle;
 	private String titre;
-	private SessionCours session;
+	private String session;
 	private int annee;
 	private int noGroupeCours;
 	private String codeEnseignant;
 
-	public Cours() {
+	public CoursTemp() {
 		super();
 		this.sigle = "";
 		this.titre = "";
-		this.session = SessionCours.H;
+		this.session = "";
 		this.annee = 0;
 		this.noGroupeCours = 0;
 		this.codeEnseignant = "";
@@ -27,7 +26,7 @@ public class Cours {
 	 * @param noGroupeCours
 	 * @param codeEnseignant
 	 */
-	public Cours(String sigle, String titre, SessionCours session, int annee, int noGroupeCours,
+	public CoursTemp(String sigle, String titre, String session, int annee, int noGroupeCours,
 			String codeEnseignant) {
 		super();
 		this.sigle = sigle;
@@ -71,7 +70,7 @@ public class Cours {
 	/**
 	 * @return the session
 	 */
-	public SessionCours getSession() {
+	public String getSession() {
 		return session;
 	}
 
@@ -79,7 +78,7 @@ public class Cours {
 	 * @param session
 	 *            the session to set
 	 */
-	public void setSession(SessionCours session) {
+	public void setSession(String session) {
 		this.session = session;
 	}
 
@@ -127,59 +126,4 @@ public class Cours {
 	public void setCodeEnseignant(String codeEnseignant) {
 		this.codeEnseignant = codeEnseignant;
 	}
-
-	/**
-	 * @param obj
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Cours other = (Cours) obj;
-		if (annee != other.annee) {
-			return false;
-		}
-		if (codeEnseignant == null) {
-			if (other.codeEnseignant != null) {
-				return false;
-			}
-		} else if (!codeEnseignant.equals(other.codeEnseignant)) {
-			return false;
-		}
-		if (noGroupeCours != other.noGroupeCours) {
-			return false;
-		}
-		if (session != other.session) {
-			return false;
-		}
-		if (sigle == null) {
-			if (other.sigle != null) {
-				return false;
-			}
-		} else if (!sigle.equals(other.sigle)) {
-			return false;
-		}
-		if (titre == null) {
-			if (other.titre != null) {
-				return false;
-			}
-		} else if (!titre.equals(other.titre)) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Cours [sigle=" + sigle + ", titre=" + titre + ", session=" + session + ", annee=" + annee
-				+ ", noGroupeCours=" + noGroupeCours + ", codeEnseignant=" + codeEnseignant + "]";
-	}
-
 }

@@ -13,11 +13,9 @@ DROP TABLE EtudiantEquipe;
 DROP TABLE AccesFTP;
 DROP TABLE Equipe;
 DROP TABLE Message;
-DROP TABLE EtudiantGroupeCours;
+DROP TABLE UtilisateurGroupeCours;
 DROP TABLE GroupeCours;
 DROP TABLE Cours;
-DROP TABLE Etudiant;
-DROP TABLE Employe;
 DROP TABLE Utilisateur;
 
 -- Suppression de la base de donnees

@@ -7,6 +7,7 @@ public class Utilisateur {
 	private String prenom;
 	private String nom;
 	private String courriel;
+	private String typeUtilisateur;
 
 	public Utilisateur() {
 		super();
@@ -15,6 +16,7 @@ public class Utilisateur {
 		this.prenom = "";
 		this.nom = "";
 		this.courriel = "";
+		this.typeUtilisateur = "";
 	}
 
 	/**
@@ -23,14 +25,17 @@ public class Utilisateur {
 	 * @param prenom
 	 * @param nom
 	 * @param courriel
+	 * @param typeUtilisateur
 	 */
-	public Utilisateur(String codeUtilisateur, String motDePasse, String prenom, String nom, String courriel) {
+	public Utilisateur(String codeUtilisateur, String motDePasse, String prenom, String nom, String courriel,
+			String typeUtilisateur) {
 		super();
 		this.codeUtilisateur = codeUtilisateur;
 		this.motDePasse = motDePasse;
 		this.prenom = prenom;
 		this.nom = nom;
 		this.courriel = courriel;
+		this.typeUtilisateur = typeUtilisateur;
 	}
 
 	/**
@@ -109,62 +114,29 @@ public class Utilisateur {
 	}
 
 	/**
-	 * @param obj
+	 * @return the typeUtilisateur
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Utilisateur other = (Utilisateur) obj;
-		if (codeUtilisateur == null) {
-			if (other.codeUtilisateur != null) {
-				return false;
-			}
-		} else if (!codeUtilisateur.equals(other.codeUtilisateur)) {
-			return false;
-		}
-		if (courriel == null) {
-			if (other.courriel != null) {
-				return false;
-			}
-		} else if (!courriel.equals(other.courriel)) {
-			return false;
-		}
-		if (motDePasse == null) {
-			if (other.motDePasse != null) {
-				return false;
-			}
-		} else if (!motDePasse.equals(other.motDePasse)) {
-			return false;
-		}
-		if (nom == null) {
-			if (other.nom != null) {
-				return false;
-			}
-		} else if (!nom.equals(other.nom)) {
-			return false;
-		}
-		if (prenom == null) {
-			if (other.prenom != null) {
-				return false;
-			}
-		} else if (!prenom.equals(other.prenom)) {
-			return false;
-		}
-		return true;
+	public String getTypeUtilisateur() {
+		return typeUtilisateur;
 	}
 
+	/**
+	 * @param typeUtilisateur
+	 *            the typeUtilisateur to set
+	 */
+	public void setTypeUtilisateur(String typeUtilisateur) {
+		this.typeUtilisateur = typeUtilisateur;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "Utilisateur [codeUtilisateur=" + codeUtilisateur + ", motDePasse=" + motDePasse + ", prenom=" + prenom
-				+ ", nom=" + nom + ", courriel=" + courriel + "]";
+				+ ", nom=" + nom + ", courriel=" + courriel + ", typeUtilisateur=" + typeUtilisateur + "]";
 	}
 
 }

@@ -7,9 +7,10 @@ define([
 		'classMeetApp.authService',
 		'classMeetApp.profilService'
 	])
-	.controller('LoginCtrl',function ($scope,$window,AuthService,Session,ProfilService) {
+	.controller('LoginCtrl',function ($scope,$window,AuthService,Session,ProfilService,Profil) {
 		$scope.username="";
 		$scope.password="";
+		$scope.session={};
 		$scope.login=function(){
 			if($scope.username=="")
 			{
@@ -26,8 +27,26 @@ define([
 				{
 					if(data.status==1)
 					{
-						Session.setSession(data);
-						$window.location.href="/";
+						$scope.session=data;
+						ProfilService.getProfil($scope.username).then(
+							function(data)
+							{
+								if(data!=null&&data!="")
+								{
+									Profil.setProfilCourant(data);
+									Session.setSession(data);
+									$window.location.href="/";
+								}
+								else
+								{
+									alert("Votre code utilisateur est valide mais vous ne possédez pas de compte ClassMeet");
+								}
+							},
+							function(erreur)
+							{
+								alert(erreur);
+							}
+						)
 					}
 					else
 					{
@@ -45,14 +64,46 @@ define([
 			{
 				alert("Veuillez entrer votre code utilisateur");
 			}
-			else
+			else if($scope.password=="")
 			{
-				AuthService.getRegisterMock($scope.username).then(
+				alert("Veuillez entrer votre mot de passe");
+			}
+			else
+ 			{
+				AuthService.getAccess($scope.username,$scope.password).then(
 				function(data)
 				{
+					if(data.status==1)
+					{
+						var nouvProfil={};
+						nouvProfil.codeUtilisateur=$scope.username;
+						nouvProfil.motDePasse=$scope.password;
+  						nouvProfil.prenom=data.prenom;
+  						nouvProfil.nom=data.nom;
+  						nouvProfil.courriel=data.courriel;
 
-					alert("Votre compte a été créé avec succès")
-					$window.location.href="/#login";
+						ProfilService.addProfil(nouvProfil).then(
+							function(data)
+							{
+								if(data.status==1)
+								{
+									alert("Votre compte a été créé avec succès")
+								}
+								else
+								{
+									alert("Ce code utilisateur possède déjà un compte ClassMeet");
+								}
+							},
+							function(erreur)
+							{
+								alert(erreur);
+							}
+						)
+					}
+					else
+					{
+						alert("Votre code usager ou votre mot de passe est incorrect");
+					}
 				},
 				function(erreur)
 				{

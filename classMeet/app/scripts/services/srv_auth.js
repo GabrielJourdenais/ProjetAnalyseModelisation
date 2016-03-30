@@ -12,40 +12,13 @@ define([
 			$http({
 				method: 'POST',
 				url: 'http://localhost/authuqam/service/authentification.php',
-				data: {
-					user:username,
-					password:password
-				}
+				data: "user="+username+"&password="+password,
+    			headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
 				defer.reject("La connection au serveur a échoué");
 			});
-			return defer.promise;
-		}
-		service.getAccessMock=function(username,password){
-			var defer=$q.defer();
-			defer.resolve("ok");
-			return defer.promise;
-		}
-		service.getRegister=function(username){
-			var defer=$q.defer();
-			$http({
-				method: 'POST',
-				url: '/api/register/',
-				data: {
-					username:username
-				}
-			}).then(function successCallback(response) {
-				defer.resolve(response.data);
-			}, function errorCallback(response) {
-				defer.reject("Ce code utilisateur n'existe pas ou le compte a déjà été créé");
-			});
-			return defer.promise;
-		}
-		service.getRegisterMock=function(username){
-			var defer=$q.defer();
-			defer.resolve("Votre compte a été créé avec succès");
 			return defer.promise;
 		}
 		return service;
