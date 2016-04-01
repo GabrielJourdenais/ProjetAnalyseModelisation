@@ -2,35 +2,21 @@
     "JOUG08108901": {
         "password": "qwerty",
         "courriel": "test@uqam.courrier.ca",
-
-        "prenom": "Utilisateur",
-        "nom": "Test",
-        "codepermanent": "TEST00000000",
-        "codems": "bb000000",
-        "type": "etudiant",
-        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
-
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
         "codepermanent": "JOUG08108901",
         "codems": "gh091122"
-
+        "type": "etudiant",
+        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
     },
     "JOUG": {
         "password": "qwerty",
         "courriel": "test@uqam.courrier.ca",
-
-        "prenom": "Utilisateur",
-        "nom": "Test",
-        "codepermanent": "TEST00000000",
-        "codems": "bb000000",
-        "type": "enseignant",
-        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
-
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
         "codepermanent": "JOUG08108901",
         "codems": "gh091122"
-
+        "type": "enseignant",
+        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
     }
 }
