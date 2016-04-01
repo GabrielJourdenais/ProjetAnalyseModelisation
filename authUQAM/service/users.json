@@ -5,7 +5,7 @@
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
         "codepermanent": "JOUG08108901",
-        "codems": "gh091122"
+        "codems": "gh091122",
         "type": "etudiant",
         "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
     },
@@ -15,7 +15,7 @@
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
         "codepermanent": "JOUG08108901",
-        "codems": "gh091122"
+        "codems": "gh091122",
         "type": "enseignant",
         "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
     }
