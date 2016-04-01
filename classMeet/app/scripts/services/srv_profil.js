@@ -45,7 +45,7 @@ define([
 		service.updateProfil=function(username){
 			var defer=$q.defer();
 			$http({
-				method: 'PUT',
+				method: 'POST',
 				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username,
 			}).then(function successCallback(response) {
 				defer.resolve("Votre compte a été modifié avec succès");
@@ -73,6 +73,70 @@ define([
 			$cookies.remove("profil");
 		}
 		return profilCookie;
+	})
+	.factory('MessagerieService', function($q,$http) {
+		var service={};
+		service.envoyerMessage=function(username){
+			var defer=$q.defer();
+			$http({
+				method: 'POST',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesEnvoyes',
+			}).then(function successCallback(response) {
+				defer.resolve("Le message a été envoyé");
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		service.supprimerMessage=function(username){
+			var defer=$q.defer();
+			$http({
+				method: 'POST',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesSupprimes',
+			}).then(function successCallback(response) {
+				defer.resolve("Le message a été supprimé");
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		service.getMessagesRecus=function(username){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesRecus',
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		service.getMessagesEnvoyes=function(username){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesEnvoyes',
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		service.getMessagesSupprimes=function(username){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesSupprimes',
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		return service;
 	})
 	return app;
 })

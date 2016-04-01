@@ -5,6 +5,7 @@ define([
     './scripts/services/srv_auth.js',
     './scripts/controllers/ctrl_acceuil.js',
     './scripts/controllers/ctrl_configProfil.js',
+    './scripts/controllers/ctrl_messagerie.js',
     './scripts/controllers/ctrl_login.js',
     './scripts/controllers/ctrl_recupMDP.js',
     './scripts/controllers/ctrl_menu.js'
@@ -14,6 +15,7 @@ define([
     'classMeetApp.authService',
     'classMeetApp.acceuil',
     'classMeetApp.profil',
+    'classMeetApp.messagerie',
     'classMeetApp.login',
     'classMeetApp.recupMDP',
     'classMeetApp.menu'
@@ -34,6 +36,26 @@ define([
         templateUrl: 'views/configProfil.html',
         controller: 'ProfilCtrl',
         controllerAs: 'profil',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
+      .when('/messagerie', {
+        templateUrl: 'views/messagerie.html',
+        controller: 'MessagerieCtrl',
+        controllerAs: 'messagerie',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
+      .when('/nouveauMessage', {
+        templateUrl: 'views/nouveauMessage.html',
+        controller: 'NouveauMessageCtrl',
+        controllerAs: 'nouveauMessage',
         resolve: {
           currentSession: function(Session){
             return Session.validateSession();

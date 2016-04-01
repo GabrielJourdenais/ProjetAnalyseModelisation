@@ -4,38 +4,21 @@ public class Cours {
 
 	private String sigle;
 	private String titre;
-	private SessionCours session;
-	private int annee;
-	private int noGroupeCours;
-	private String codeEnseignant;
 
 	public Cours() {
 		super();
 		this.sigle = "";
 		this.titre = "";
-		this.session = SessionCours.H;
-		this.annee = 0;
-		this.noGroupeCours = 0;
-		this.codeEnseignant = "";
 	}
 
 	/**
 	 * @param sigle
 	 * @param titre
-	 * @param session
-	 * @param annee
-	 * @param noGroupeCours
-	 * @param codeEnseignant
 	 */
-	public Cours(String sigle, String titre, SessionCours session, int annee, int noGroupeCours,
-			String codeEnseignant) {
+	public Cours(String sigle, String titre) {
 		super();
 		this.sigle = sigle;
 		this.titre = titre;
-		this.session = session;
-		this.annee = annee;
-		this.noGroupeCours = noGroupeCours;
-		this.codeEnseignant = codeEnseignant;
 	}
 
 	/**
@@ -68,118 +51,33 @@ public class Cours {
 		this.titre = titre;
 	}
 
-	/**
-	 * @return the session
-	 */
-	public SessionCours getSession() {
-		return session;
-	}
-
-	/**
-	 * @param session
-	 *            the session to set
-	 */
-	public void setSession(SessionCours session) {
-		this.session = session;
-	}
-
-	/**
-	 * @return the annee
-	 */
-	public int getAnnee() {
-		return annee;
-	}
-
-	/**
-	 * @param annee
-	 *            the annee to set
-	 */
-	public void setAnnee(int annee) {
-		this.annee = annee;
-	}
-
-	/**
-	 * @return the noGroupeCours
-	 */
-	public int getNoGroupeCours() {
-		return noGroupeCours;
-	}
-
-	/**
-	 * @param noGroupeCours
-	 *            the noGroupeCours to set
-	 */
-	public void setNoGroupeCours(int noGroupeCours) {
-		this.noGroupeCours = noGroupeCours;
-	}
-
-	/**
-	 * @return the codeEnseignant
-	 */
-	public String getCodeEnseignant() {
-		return codeEnseignant;
-	}
-
-	/**
-	 * @param codeEnseignant
-	 *            the codeEnseignant to set
-	 */
-	public void setCodeEnseignant(String codeEnseignant) {
-		this.codeEnseignant = codeEnseignant;
-	}
-
-	/**
-	 * @param obj
-	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Cours other = (Cours) obj;
-		if (annee != other.annee) {
-			return false;
-		}
-		if (codeEnseignant == null) {
-			if (other.codeEnseignant != null) {
-				return false;
-			}
-		} else if (!codeEnseignant.equals(other.codeEnseignant)) {
-			return false;
-		}
-		if (noGroupeCours != other.noGroupeCours) {
-			return false;
-		}
-		if (session != other.session) {
-			return false;
-		}
 		if (sigle == null) {
-			if (other.sigle != null) {
+			if (other.sigle != null)
 				return false;
-			}
-		} else if (!sigle.equals(other.sigle)) {
+		} else if (!sigle.equals(other.sigle))
 			return false;
-		}
 		if (titre == null) {
-			if (other.titre != null) {
+			if (other.titre != null)
 				return false;
-			}
-		} else if (!titre.equals(other.titre)) {
+		} else if (!titre.equals(other.titre))
 			return false;
-		}
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Cours [sigle=" + sigle + ", titre=" + titre + ", session=" + session + ", annee=" + annee
-				+ ", noGroupeCours=" + noGroupeCours + ", codeEnseignant=" + codeEnseignant + "]";
+		return "Cours [sigle=" + sigle + ", titre=" + titre + "]";
 	}
+
+	
 
 }

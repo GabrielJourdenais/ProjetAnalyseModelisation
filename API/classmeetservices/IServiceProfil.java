@@ -1,4 +1,4 @@
-package classmeetdao;
+package classmeetservices;
 
 import java.util.List;
 
@@ -7,8 +7,7 @@ import classmeetmodels.GroupeCoursUtilisateur;
 import classmeetmodels.Message;
 import classmeetmodels.Utilisateur;
 
-public interface IProfilDAO {
-
+public interface IServiceProfil {
 
 	/**
 	 * Fonction qui retourne la liste des profil de tous les utilisateurs.
@@ -112,5 +111,6 @@ public interface IProfilDAO {
 	 * @param codeUtilisateur
 	 */
 	public int addMessageParProfil(Message nouvMessage,String codeUtilisateur);
+
 	
 }

@@ -14,7 +14,7 @@ codeUtilisateur VARCHAR(12),
 motDePasse VARCHAR(8) NOT NULL,
 prenom VARCHAR(30) NOT NULL,
 nom VARCHAR(30) NOT NULL,
-courriel VARCHAR(30),
+courriel VARCHAR(50),
 typeUtilisateur VARCHAR(20),
 CONSTRAINT pk_Utilisateur PRIMARY KEY(codeUtilisateur)
 );
@@ -51,18 +51,19 @@ CONSTRAINT fk_Etudiant_Groupe_Cours_2 FOREIGN KEY(noGroupeCours) REFERENCES Grou
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Groupe_Cours_3 FOREIGN KEY(sigle) REFERENCES Cours(sigle)
 ON DELETE NO ACTION ON UPDATE CASCADE,
-CONSTRAINT pk_Etudiant_Groupe_Cours PRIMARY KEY(codePermanent, noGroupeCours, sigle)
+CONSTRAINT pk_Etudiant_Groupe_Cours PRIMARY KEY(codePermanent, sigle)
 );
 
 CREATE TABLE Message (
 idMessage INTEGER NOT NULL AUTO_INCREMENT,
-codeUtilisateur VARCHAR(10),
-de VARCHAR(30) NOT NULL,
-a VARCHAR(30) NOT NULL,
+de VARCHAR(12) NOT NULL,
+a VARCHAR(12) NOT NULL,
 objet VARCHAR(30),
 texte VARCHAR(100),
 CONSTRAINT pk_Message PRIMARY KEY(idMessage),
-CONSTRAINT fk_Message_Utilisateur FOREIGN KEY(codeUtilisateur) REFERENCES Utilisateur(codeUtilisateur)
+CONSTRAINT fk_Message_De FOREIGN KEY(de) REFERENCES Utilisateur(codeUtilisateur)
+ON DELETE NO ACTION ON UPDATE CASCADE,
+CONSTRAINT fk_Message_A FOREIGN KEY(a) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -95,7 +96,7 @@ sigle VARCHAR(7),
 noGroupeCours INTEGER,
 noEquipe INTEGER,
 codePermanent VARCHAR(12),
-CONSTRAINT pk_Fichier PRIMARY KEY(sigle, noGroupeCours, noEquipe, codePermanent),
+CONSTRAINT pk_Fichier PRIMARY KEY(sigle,codePermanent),
 CONSTRAINT fk_Etudiant_Equipe_Cours FOREIGN KEY(sigle) REFERENCES Cours(sigle)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Groupe_Cours FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
