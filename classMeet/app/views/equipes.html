@@ -1,0 +1,42 @@
+<div ng-include="'views/menu/menu.html'"></div>
+<div ng-controller="EquipesCtrl">
+  <h4>Créer une équipe</h4>
+  <form id="creerEquipe">
+      <table class="table table-hover">
+        <tr>
+            <td><td><label for="user">Nom:</label></td></td>
+            <td><input type="text" id="nomequipe" name="nomequipe" size="32" /></td>
+            <td><input type="submit" value="Envoyer" /></td>
+        </tr>
+      </table>
+  </form>
+  <br />
+  <h4>Liste des équipes</h4>
+  <form id="rejoindreEquipe">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Chef d'Équipe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="disable-text-selection" ng-repeat="equipe in listeEquipes">
+            <td>{{equipe.noEquipe}}</td>
+            <td>{{equipe.nomEquipe}}</td>
+            <td>{{equipe.chefEquipe}}</td>
+            <td><input type="submit" id="rej{{equipe.noEquipe}}" value="Rejoindre" /></td>
+          </tr>
+        </tbody>
+      </table>
+  </form>
+  <div id="sidebar-wrapper .hidden">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand" ng-repeat="coequipier in listeCoequipiers">
+                <span>{{coequipier.nom}}, {{coequipier.prenom}}</span>
+                <a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+            </li>
+        </ul>
+  </div>
+</div>
