@@ -98,6 +98,14 @@ public interface IRessourceProfil {
 	 * @pathParam codeUtilisateur
 	 */
 	public Response addMessageParProfil(Message nouvMessage,String codeUtilisateur);
+	
+	/**
+	 * @DELETE url: localhost:7001/ClassMeet/v1/profils/{codeUtilisateur}/messages/{idMessage}
+	 * 
+	 * @pathParam codeUtilisateur
+	 * @pathParam idMessage
+	 */
+	public Response supprimerMessage(String codeUtilisateur,int idMessage);
 
 	
 

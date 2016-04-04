@@ -54,7 +54,8 @@ public class ProfilDAO implements IProfilDAO {
 	
 	@Override
 	public int updateProfil(Utilisateur nouvUtilisateur, String codeUtilisateur) {
-		String query = "update Utilisateur " + "set motDePasse = '" + nouvUtilisateur.getMotDePasse() + "',"
+		String query = "update Utilisateur " + "set nom = '" + nouvUtilisateur.getNom() + "',"
+				+ " prenom = '" + nouvUtilisateur.getPrenom() + "',"
 				+ " courriel = '" + nouvUtilisateur.getCourriel() + "'" + " where codeUtilisateur = '" + codeUtilisateur
 				+ "'";
 		SqlParameterSource namedParameters = null;
@@ -138,8 +139,16 @@ public class ProfilDAO implements IProfilDAO {
 				"'" + codeUtilisateur + "'," +
 				"'" + nouvMessage.getA()+ "'," +
 				"'" + nouvMessage.getObjet()+ "'," +
-				"'" + nouvMessage.getTexte() + "'" + ")";
+				"'" + nouvMessage.getTexte() + "'," + 
+				"now()" + ")";
 		
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.update(query, namedParameters);
+	}
+	
+	@Override
+	public int supprimerMessage(String codeUtilisateur,int idMessage) {
+		String query = "delete from Message where idMessage="+idMessage;
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.update(query, namedParameters);
 	}
@@ -174,8 +183,8 @@ public class ProfilDAO implements IProfilDAO {
 		@Override
 		public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-			Message unMessage = new Message(rs.getString(2),rs.getString(3), rs.getString(4),
-					rs.getString(5));
+			Message unMessage = new Message(rs.getInt(1),rs.getString(2),rs.getString(3), rs.getString(4),
+					rs.getString(5),rs.getString(6));
 
 			return unMessage;
 		}

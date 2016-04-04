@@ -3,6 +3,7 @@ package classmeetwebservices;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -152,6 +153,7 @@ public class RessourceProfil implements IRessourceProfil {
 				.build();
 	}
 
+	
 	@POST
 	@Path("{codeUtilisateur}/groupesCours")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -296,8 +298,48 @@ public class RessourceProfil implements IRessourceProfil {
 					.header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
-
 	
+	@OPTIONS
+	@Path("{codeUtilisateur}/messages/{idMessage}")
+	public Response supprimerMessagePreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,DELETE")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+	
+	@DELETE
+	@Path("{codeUtilisateur}/messages/{idMessage}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response supprimerMessage(@PathParam("codeUtilisateur") String codeUtilisateur,@PathParam("idMessage") int idMessage){
+		MessageStatus status=new MessageStatus(0);
+		try {
+			status = new MessageStatus(service.supprimerMessage(codeUtilisateur,idMessage));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+
+
+	/*@DELETE
+	@Path("{codeUtilisateur}/messagesEnvoyes/{idMessage}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response supprimerMessageEnvoyes(@PathParam("codeUtilisateur") String codeUtilisateur,@PathParam("idMessage") int idMessage){
+		MessageStatus status=new MessageStatus(0);
+		try {
+			status = new MessageStatus(service.supprimerMessage(codeUtilisateur,idMessage));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}*/
 	
 
 }

@@ -111,6 +111,14 @@ public interface IServiceProfil {
 	 * @param codeUtilisateur
 	 */
 	public int addMessageParProfil(Message nouvMessage,String codeUtilisateur);
+	
+	/**
+	 * Fonction qui supprime un message en fonction de son id et retourne le resulat de la requête
+	 * 
+	 * @param codeUtilisateur
+	 * @param idMessage
+	 */
+	public int supprimerMessage(String codeUtilisateur,int idMessage);
 
 	
 }

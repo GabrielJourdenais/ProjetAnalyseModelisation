@@ -2,17 +2,21 @@ package classmeetmodels;
 
 public class Message {
 
+	private int id;
 	private String de;
 	private String a;
 	private String objet;
 	private String texte;
+	private String dateMessage;
 
 	public Message() {
 		super();
+		this.id=0;
 		this.de = "";
 		this.a = "";
 		this.objet = "";
 		this.texte = "";
+		this.dateMessage = "";
 	}
 
 	/**
@@ -21,15 +25,26 @@ public class Message {
 	 * @param a
 	 * @param objet
 	 * @param texte
+	 * @param dateMessage
 	 */
-	public Message(String de, String a, String objet, String texte) {
+	public Message(int id,String de, String a, String objet, String texte, String dateMessage) {
 		super();
+		this.id=id;
 		this.de = de;
 		this.a = a;
 		this.objet = objet;
 		this.texte = texte;
+		this.dateMessage = dateMessage;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the de
 	 */
@@ -89,44 +104,15 @@ public class Message {
 	public void setTexte(String texte) {
 		this.texte = texte;
 	}
+
+	public String getDateMessage() {
+		return dateMessage;
+	}
+
+	public void setDateMessage(String dateMessage) {
+		this.dateMessage = dateMessage;
+	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Message other = (Message) obj;
-		if (a == null) {
-			if (other.a != null)
-				return false;
-		} else if (!a.equals(other.a))
-			return false;
-		if (de == null) {
-			if (other.de != null)
-				return false;
-		} else if (!de.equals(other.de))
-			return false;
-		if (objet == null) {
-			if (other.objet != null)
-				return false;
-		} else if (!objet.equals(other.objet))
-			return false;
-		if (texte == null) {
-			if (other.texte != null)
-				return false;
-		} else if (!texte.equals(other.texte))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Message [de=" + de + ", a=" + a + ", objet=" + objet + ", texte=" + texte + "]";
-	}
-
 	
 	
 }

@@ -159,4 +159,19 @@ public class ServiceProfil implements IServiceProfil {
 			return 0;
 		}
 	}
+	
+	@Override
+	public int supprimerMessage(String codeUtilisateur,int idMessage) {
+		try {
+			int nbLigne = dao.supprimerMessage(codeUtilisateur,idMessage);
+			if (nbLigne > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 }
