@@ -4,24 +4,14 @@
   <h3>Configuration du profil</h3>
   <br>
   <br>
-  Nom: <input type="text" ng-model="nom"/>
-  <br>
-  <br>
-  Prenom: <input type="text" ng-model="prenom"/>
-  <br>
-  <br>
-  Email: <input type="text" ng-model="email"/>
-  <br>
-  <br>
-  Mot de passe:<input type="password" ng-model="MDP"/>
-  <br>
-  <br>
-  Nouveau mot de passe:<input type="password" ng-model="NMDP"/>
-  <br>
-  <br>
-  Répéter le mot de passe:<input type="password" ng-model="NMDP2"/>
-  <br>
-  <br>
+  <table style="border-collapse:separate;border-spacing:1em;">
+  <tr><td>Nom:</td><td><input type="text" style="width:350px;" ng-model="profil.nom"/></td></tr>
+  <tr><td>Prenom:</td><td><input type="text" style="width:350px;" ng-model="profil.prenom"/></td></tr>
+  <tr><td>Courriel:</td><td><input type="text" style="width:350px;" ng-model="profil.courriel"/></td></tr>
+  <tr><td>MotDePasse:</td><td><input type="password" style="width:350px;" ng-model="auth.mdp"/></td></tr>
+  <tr><td>Nouveau MotDePasse:</td><td><input type="password" style="width:350px;" ng-model="auth.newmdp"/></td></tr>
+  <tr><td>Répéter MotDePasse:</td><td><input type="password" style="width:350px;" ng-model="auth.newmdp2"/></td></tr>
+  </table>
   <input class="btn btn-default" type="button" ng-click="enregistrer()" value="Enregister les changements"/>
   <input class="btn btn-default" type="button" ng-click="annuler()"value="Annuler"/>
 </div>

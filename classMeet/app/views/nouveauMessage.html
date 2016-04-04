@@ -1,14 +1,13 @@
 <div ng-include="'views/menu/menu.html'"></div>
-<div ng-controller="NouveauMessageCtrl">
-
-  <div style="width: 25%; float: left;">
-  <ul style="list-style-type:none;">
-  <li ng-click="">Boite de réception</li>
-  <li>Messages Envoyés</li>
-  <li>Messages Supprimés</li>
-  </ul>
-  </div>
-  <div style="width: 75%; float: left;">
-    <input type="button" value="Envoyer"/><input type="button" value="Annuler"/>
-  </div>
+<div ng-include="'views/messagerie/sectionMessagerie.html'"></div>
+<div style="width: 75%; float: left;" ng-controller="NouveauMessageCtrl">
+<table style="border-collapse:separate;border-spacing:0.5em;">
+<tr>
+  <td><input type="button" class="btn btn-default" ng-click="envoyerMessage()" value="Envoyer"/></td>
+  <td><input type="button" class="btn btn-default" ng-click="annuler()" value="Annuler"/></td>
+</tr>
+  <tr><td>À</td><td><input type="text" style="width:300px;" ng-model="messageCourant.a"/></td></tr>
+  <tr><td>Objet</td><td><input type="text" style="width:300px;" ng-model="messageCourant.objet"/></td></tr>
+  </table>
+  <textarea style="resize:none; width:600px; height:300px;" ng-model="messageCourant.texte"></textarea>
 </div>

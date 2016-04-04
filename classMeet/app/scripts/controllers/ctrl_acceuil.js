@@ -1,16 +1,15 @@
 define([
     'angular',
-    '../services/srv_auth.js'
+    '../services/srv_auth.js',
+    '../services/srv_profil.js'
 ], function(ng) {
   var app=ng.module('classMeetApp.acceuil', [
-    "classMeetApp.authService"
+    "classMeetApp.authService",
+    "classMeetApp.profilService"
   ])
-  .controller('AcceuilCtrl',function($scope,$window,Session){
-    $scope.listeCours=[
-    {sigle:"INM5151",titre:"Projet d'analyse et de modélisation",groupe:10},
-    {sigle:"INF5000",titre:"Théorie et construction des compilateurs",groupe:10},
-    {sigle:"INF5153",titre:"Génie logiciel: conception",groupe:30}
-    ];
+  .controller('AcceuilCtrl',function($scope,$window,Session,Profil,GroupesCours){
+    $scope.profil=Profil.getProfilCourant();
+    $scope.listeCours=GroupesCours.getGroupesCoursCourant();
     
   })
   return app

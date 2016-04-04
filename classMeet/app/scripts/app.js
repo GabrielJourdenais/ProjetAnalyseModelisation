@@ -6,6 +6,8 @@ define([
     './scripts/controllers/ctrl_acceuil.js',
     './scripts/controllers/ctrl_configProfil.js',
     './scripts/controllers/ctrl_messagerie.js',
+    './scripts/controllers/ctrl_nouveauMessage.js',
+    './scripts/controllers/ctrl_messagesEnvoyes.js',
     './scripts/controllers/ctrl_login.js',
     './scripts/controllers/ctrl_recupMDP.js',
     './scripts/controllers/ctrl_menu.js'
@@ -16,6 +18,8 @@ define([
     'classMeetApp.acceuil',
     'classMeetApp.profil',
     'classMeetApp.messagerie',
+    'classMeetApp.nouveauMessage',
+    'classMeetApp.messagesEnvoyes',
     'classMeetApp.login',
     'classMeetApp.recupMDP',
     'classMeetApp.menu'
@@ -46,6 +50,16 @@ define([
         templateUrl: 'views/messagerie.html',
         controller: 'MessagerieCtrl',
         controllerAs: 'messagerie',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
+      .when('/messagesEnvoyes', {
+        templateUrl: 'views/messagesEnvoyes.html',
+        controller: 'MessagesEnvoyesCtrl',
+        controllerAs: 'messagesEnvoyes',
         resolve: {
           currentSession: function(Session){
             return Session.validateSession();

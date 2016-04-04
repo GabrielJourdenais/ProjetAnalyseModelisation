@@ -24,7 +24,7 @@ CREATE INDEX indNomUtilisateur ON Utilisateur(prenom, nom);
 
 CREATE TABLE Cours (
 sigle VARCHAR(7),
-titre VARCHAR(30),
+titre VARCHAR(50),
 CONSTRAINT pk_Cours PRIMARY KEY(sigle)
 );
 
@@ -60,11 +60,33 @@ de VARCHAR(12) NOT NULL,
 a VARCHAR(12) NOT NULL,
 objet VARCHAR(30),
 texte VARCHAR(100),
+dateMessage VARCHAR(30),
 CONSTRAINT pk_Message PRIMARY KEY(idMessage),
 CONSTRAINT fk_Message_De FOREIGN KEY(de) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Message_A FOREIGN KEY(a) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE MessageRecus (
+idMessage INTEGER,
+codeUtilisateur VARCHAR(12) NOT NULL,
+CONSTRAINT pk_MessageRecus PRIMARY KEY(idMessage),
+CONSTRAINT fk_MessageRecus_ID FOREIGN KEY(idMessage) REFERENCES Message(idMessage)
+ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT fk_MessageRecus_Code FOREIGN KEY(codeUtilisateur) REFERENCES Utilisateur(codeUtilisateur)
+ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+CREATE TABLE MessageEnvoye (
+idMessage INTEGER,
+codeUtilisateur VARCHAR(12) NOT NULL,
+CONSTRAINT pk_MessageEnvoye PRIMARY KEY(idMessage),
+CONSTRAINT fk_MessageEnvoye_ID FOREIGN KEY(idMessage) REFERENCES Message(idMessage)
+ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT fk_MessageEnvoye_Code FOREIGN KEY(codeUtilisateur) REFERENCES Utilisateur(codeUtilisateur)
+ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
 CREATE TABLE Equipe (

@@ -5,41 +5,45 @@ define([
 	var app=ng.module('classMeetApp.messagerie',[
 		'classMeetApp.profilService'
 	])
-	.controller('MessagerieCtrl',function ($scope,Profil,MessagerieService) {
-		$scope.messagesRecus=[
-			{
-				'objet':"Test",
-				'de':'Maxime',
-				'date': '03/28/2016 : 11:30 AM'
-			},
-			{
-				'objet':"Test2",
-				'de':'Vincent',
-				'date': '03/28/2016 : 11:30 AM'
-			},
-		];
-		$scope.messagesEnvoyes=[];
-		$scope.messagesSupprimes=[];
-		$scope.ouvrirMessage=function(){
-			
+	.controller('MessagerieCtrl',function ($scope,$window,Profil,MessagerieService) {
+		$scope.profil=Profil.getProfilCourant();
+		$scope.canDelete=false;
+		$scope.messageCourant=null;
+		MessagerieService.getMessagesRecus($scope.profil.codeUtilisateur).then(
+			function(data){
+				$scope.messagesRecus=data;
+				for(i=0;i<$scope.messagesRecus.length;i++)
+				{
+					$scope.messagesRecus[i].selected=false;
+				}
+			}
+		)
+		$scope.ouvrirMessage=function(message){
+			$scope.messageCourant=message;
 		}
 		$scope.nouveauMessage=function(){
-			
-		}
-		$scope.repondreMessage=function(){
-			
+			$window.location="/#/nouveauMessage";
 		}
 		$scope.supprimerMessage=function(){
-			
+			for(i=0;i<$scope.messagesRecus.length;i++)
+			{
+				if($scope.messagesRecus[i].selected)
+				{
+					MessagerieService.supprimerMessage($scope.profil.codeUtilisateur,$scope.messagesRecus[i].id).then()
+				}
+			}
+			$window.location="/#/messagerie";
+			$window.location.reload();
 		}
-		$scope.ouvrirBoiteReception=function(){
-			
-		}
-		$scope.ouvrirMessagesEnvoyes=function(){
-			
-		}
-		$scope.ouvrirMessagesSupprimes=function(){
-			
+		$scope.updateCheckbox=function(){
+			$scope.canDelete=false;
+			for(i=0;i<$scope.messagesRecus.length;i++)
+			{
+				if($scope.messagesRecus[i].selected)
+				{
+					$scope.canDelete=true;
+				}
+			}
 		}
 
 	});

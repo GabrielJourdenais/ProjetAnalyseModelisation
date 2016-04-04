@@ -1,22 +1,126 @@
 {
     "JOUG08108901": {
         "password": "qwerty",
-        "courriel": "test@uqam.courrier.ca",
+        "courriel": "jourdenais_hamel.gabriel@courrier.uqam.ca",
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
         "codepermanent": "JOUG08108901",
         "codems": "gh091122",
         "type": "etudiant",
-        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
+        "groupecours": [
+            {
+                "sigle": "INF5180",
+                "groupe": 40
+            },
+            {
+                "sigle": "INF2160",
+                "groupe": 30
+            },
+            {
+                "sigle": "INF5153",
+                "groupe": 30
+            },
+            {
+                "sigle": "INM5151",
+                "groupe": 10
+            },
+            {
+                "sigle": "ORH1163",
+                "groupe": 10
+            }
+        ]
     },
-    "JOUG": {
+    "VARM27108903": {
+        "password": "qwerty",
+        "courriel": "varin.maxime@courrier.uqam.ca",
+        "prenom": "Maxime",
+        "nom": "Varin",
+        "codepermanent": "VARM27108903",
+        "codems": "",
+        "type": "etudiant",
+        "groupecours": [
+            {
+                "sigle": "INF5180",
+                "groupe": 40
+            },
+            {
+                "sigle": "INF2160",
+                "groupe": 30
+            },
+            {
+                "sigle": "INF5153",
+                "groupe": 30
+            },
+            {
+                "sigle": "INM5151",
+                "groupe": 10
+            },
+            {
+                "sigle": "ORH1163",
+                "groupe": 10
+            }
+        ]
+    },
+    "LAVV180829202": {
+        "password": "qwerty",
+        "courriel": "lavoie.vincent@courrier.uqam.ca",
+        "prenom": "Vincent",
+        "nom": "Lavoie",
+        "codepermanent": "LAVV180829202",
+        "codems": "",
+        "type": "etudiant",
+        "groupecours": [
+            {
+                "sigle": "INF5180",
+                "groupe": 40
+            },
+            {
+                "sigle": "INF2160",
+                "groupe": 30
+            },
+            {
+                "sigle": "INF5153",
+                "groupe": 30
+            },
+            {
+                "sigle": "INM5151",
+                "groupe": 10
+            },
+            {
+                "sigle": "ORH1163",
+                "groupe": 10
+            }
+        ]
+    },
+    "PROF12345": {
         "password": "qwerty",
         "courriel": "test@uqam.courrier.ca",
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
-        "codepermanent": "JOUG08108901",
+        "codepermanent": "PROF12345",
         "codems": "gh091122",
         "type": "enseignant",
-        "groupecours": ["INF5180-40", "INF2160-30", "INF5153-30", "INM5151-10", "ORH1163-10"]
+        "groupecours": [
+            {
+                "sigle": "INF5180",
+                "groupe": 40
+            },
+            {
+                "sigle": "INF2160",
+                "groupe": 30
+            },
+            {
+                "sigle": "INF5153",
+                "groupe": 30
+            },
+            {
+                "sigle": "INM5151",
+                "groupe": 10
+            },
+            {
+                "sigle": "ORH1163",
+                "groupe": 10
+            }
+        ]
     }
 }

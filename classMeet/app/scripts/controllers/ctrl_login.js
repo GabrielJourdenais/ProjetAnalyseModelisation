@@ -7,7 +7,7 @@ define([
 		'classMeetApp.authService',
 		'classMeetApp.profilService'
 	])
-	.controller('LoginCtrl',function ($scope,$window,AuthService,Session,ProfilService,Profil) {
+	.controller('LoginCtrl',function ($scope,$window,AuthService,Session,ProfilService,Profil,GroupesCours,CoursService,$cookies) {
 		$scope.username="";
 		$scope.password="";
 		$scope.session={};
@@ -33,9 +33,21 @@ define([
 							{
 								if(data!=null&&data!="")
 								{
-									Profil.setProfilCourant(data);
-									Session.setSession(data);
-									$window.location.href="/";
+									$scope.profil=data;
+									CoursService.getGroupeCours($scope.username).then(
+										function(data)
+										{
+											GroupesCours.setGroupesCoursCourant(data);
+											Profil.setProfilCourant($scope.profil);
+											Session.setSession($scope.session);
+											$window.location.href="/";
+											
+										},
+										function(erreur)
+										{
+											alert(erreur);
+										}
+									)
 								}
 								else
 								{
@@ -47,6 +59,7 @@ define([
 								alert(erreur);
 							}
 						)
+						
 					}
 					else
 					{
@@ -77,10 +90,12 @@ define([
 					{
 						var nouvProfil={};
 						nouvProfil.codeUtilisateur=$scope.username;
-						nouvProfil.motDePasse=$scope.password;
   						nouvProfil.prenom=data.prenom;
   						nouvProfil.nom=data.nom;
   						nouvProfil.courriel=data.courriel;
+  						nouvProfil.typeUtilisateur=data.type;
+
+  						var groupecours=data.groupecours;
 
 						ProfilService.addProfil(nouvProfil).then(
 							function(data)
@@ -99,6 +114,10 @@ define([
 								alert(erreur);
 							}
 						)
+						for(i=0;i<groupecours.length;i++)
+						{
+							CoursService.addGroupeCours(nouvProfil.codeUtilisateur,groupecours[i].sigle,groupecours[i].groupe);
+						}
 					}
 					else
 					{

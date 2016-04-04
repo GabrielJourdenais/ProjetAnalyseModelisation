@@ -5,18 +5,6 @@ define([
 	])
 	.factory('ProfilService', function($q,$http) {
 		var service={};
-		service.getCours=function(username){
-			var defer=$q.defer();
-			$http({
-				method: 'GET',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'cours',
-			}).then(function successCallback(response) {
-				defer.resolve(response.data);
-			}, function errorCallback(response) {
-				defer.reject("La requête a échoué");
-			});
-			return defer.promise;
-		}
 		service.getProfil=function(username){
 			var defer=$q.defer();
 			$http({
@@ -42,21 +30,17 @@ define([
 			});
 			return defer.promise;
 		}
-		service.updateProfil=function(username){
+		service.updateProfil=function(username,profil){
 			var defer=$q.defer();
 			$http({
 				method: 'POST',
 				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username,
+				data: profil
 			}).then(function successCallback(response) {
-				defer.resolve("Votre compte a été modifié avec succès");
+				defer.resolve(response.data);
 			}, function errorCallback(response) {
 				defer.reject("La requête a échoué");
 			});
-			return defer.promise;
-		}
-		service.updateProfilMock=function(username){
-			var defer=$q.defer();
-			defer.resolve("Votre compte a été modifié avec succès");
 			return defer.promise;
 		}
 		return service;
@@ -64,37 +48,71 @@ define([
 	.factory('Profil', function($q,$cookies) {
 		var profilCookie={};
 		profilCookie.setProfilCourant=function(profil){
-			$cookies.put("profil",profil);
+			$cookies.putObject("profil",profil);
 		}
 		profilCookie.getProfilCourant=function(){
-			return $cookies.get("profil");
+			return $cookies.getObject("profil");
 		}
 		profilCookie.deleteProfilCourant=function(){
 			$cookies.remove("profil");
 		}
 		return profilCookie;
 	})
-	.factory('MessagerieService', function($q,$http) {
+	.factory('GroupesCours', function($q,$cookies) {
+		var profilCookie={};
+		profilCookie.setGroupesCoursCourant=function(groupesCours){
+			$cookies.putObject("groupesCours",groupesCours);
+		}
+		profilCookie.getGroupesCoursCourant=function(){
+			return $cookies.getObject("groupesCours");
+		}
+		profilCookie.deleteGroupesCoursCourant=function(){
+			$cookies.remove("groupesCours");
+		}
+		return profilCookie;
+	})
+	.factory('CoursService', function($q,$http) {
 		var service={};
-		service.envoyerMessage=function(username){
+		service.getGroupeCours=function(username){
 			var defer=$q.defer();
 			$http({
-				method: 'POST',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesEnvoyes',
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/groupesCours',
 			}).then(function successCallback(response) {
-				defer.resolve("Le message a été envoyé");
+				defer.resolve(response.data);
 			}, function errorCallback(response) {
 				defer.reject("La requête a échoué");
 			});
 			return defer.promise;
 		}
-		service.supprimerMessage=function(username){
+		service.addGroupeCours=function(username,sigleCours,noGroupe){
 			var defer=$q.defer();
 			$http({
 				method: 'POST',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesSupprimes',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/groupesCours',
+				data: {
+						sigle:sigleCours,
+    					noGroupeCours:noGroupe
+    			}
 			}).then(function successCallback(response) {
-				defer.resolve("Le message a été supprimé");
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		return service;
+	})
+	.factory('MessagerieService', function($q,$http) {
+		var service={};
+		service.envoyerMessage=function(username,message){
+			var defer=$q.defer();
+			$http({
+				method: 'POST',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messages',
+				data: message
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
 			}, function errorCallback(response) {
 				defer.reject("La requête a échoué");
 			});
@@ -104,7 +122,7 @@ define([
 			var defer=$q.defer();
 			$http({
 				method: 'GET',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesRecus',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messages',
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
@@ -124,11 +142,11 @@ define([
 			});
 			return defer.promise;
 		}
-		service.getMessagesSupprimes=function(username){
+		service.supprimerMessage=function(username,id){
 			var defer=$q.defer();
 			$http({
-				method: 'GET',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messagesSupprimes',
+				method: 'DELETE',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/messages/'+id
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
