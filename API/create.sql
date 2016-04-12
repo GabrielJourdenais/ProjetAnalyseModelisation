@@ -21,7 +21,6 @@ CONSTRAINT pk_Utilisateur PRIMARY KEY(codeUtilisateur)
 
 CREATE INDEX indNomUtilisateur ON Utilisateur(prenom, nom);
 
-
 CREATE TABLE Cours (
 sigle VARCHAR(7),
 titre VARCHAR(50),
@@ -67,7 +66,6 @@ ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Message_A FOREIGN KEY(a) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 CREATE TABLE MessageRecus (
 idMessage INTEGER,
@@ -118,7 +116,7 @@ sigle VARCHAR(7),
 noGroupeCours INTEGER,
 noEquipe INTEGER,
 codePermanent VARCHAR(12),
-CONSTRAINT pk_Fichier PRIMARY KEY(sigle,codePermanent),
+CONSTRAINT pk_Fichier PRIMARY KEY(sigle, codePermanent),
 CONSTRAINT fk_Etudiant_Equipe_Cours FOREIGN KEY(sigle) REFERENCES Cours(sigle)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Groupe_Cours FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
@@ -126,5 +124,22 @@ ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Equipe FOREIGN KEY(noEquipe) REFERENCES Equipe(noEquipe)
 ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_Etudiant_Equipe_Etudiant FOREIGN KEY(codePermanent) REFERENCES Utilisateur(codeUtilisateur)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Evenements (
+sigle VARCHAR(7),
+noGroupeCours INTEGER,
+noEquipe INTEGER,
+nom VARCHAR(10),
+description VARCHAR(30),
+dateEvenements VARCHAR(30),
+lieu VARCHAR(30),
+CONSTRAINT pk_Evenements PRIMARY KEY(sigle, noGroupeCours, noEquipe, dateEvenements),
+CONSTRAINT fk_Cours_Evenements FOREIGN KEY(sigle) REFERENCES Cours(sigle)
+ON DELETE NO ACTION ON UPDATE CASCADE,
+CONSTRAINT fk_GroupeCours_Evenements FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
+ON DELETE NO ACTION ON UPDATE CASCADE,
+CONSTRAINT fk_Equipe_Evenements FOREIGN KEY(noEquipe) REFERENCES Equipe(noEquipe)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
