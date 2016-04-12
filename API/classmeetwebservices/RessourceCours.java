@@ -18,6 +18,7 @@ import classmeetmodels.Cours;
 import classmeetmodels.Equipe;
 import classmeetmodels.GroupeCours;
 import classmeetmodels.MessageStatus;
+import classmeetmodels.Evenements;
 import classmeetservices.IServiceCours;
 import classmeetservices.ServiceCours;
 
@@ -183,8 +184,20 @@ public class RessourceCours implements IRessourceCours{
 		}
 	}
 
-	
-
-	
+	@POST
+	@Path("/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response addEvenement(Evenements nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
+		MessageStatus status;
+		try {
+			status = new MessageStatus(service.addEvenement(nouvEvenement, sigleCours, noGroupe, noEquipe));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
 
 }
