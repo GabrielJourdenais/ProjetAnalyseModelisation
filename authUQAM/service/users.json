@@ -1,6 +1,6 @@
 {
     "JOUG08108901": {
-        "password": "qwerty",
+        "password": "test",
         "courriel": "jourdenais_hamel.gabriel@courrier.uqam.ca",
         "prenom": "Gabriel",
         "nom": "Jourdenais Hamel",
@@ -61,12 +61,12 @@
             }
         ]
     },
-    "LAVV180829202": {
+    "LAVV18082902": {
         "password": "qwerty",
         "courriel": "lavoie.vincent@courrier.uqam.ca",
         "prenom": "Vincent",
         "nom": "Lavoie",
-        "codepermanent": "LAVV180829202",
+        "codepermanent": "LAVV18082902",
         "codems": "",
         "type": "etudiant",
         "groupecours": [

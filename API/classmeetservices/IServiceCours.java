@@ -4,8 +4,9 @@ import java.util.List;
 
 import classmeetmodels.Cours;
 import classmeetmodels.Equipe;
-import classmeetmodels.Evenements;
+import classmeetmodels.Evenement;
 import classmeetmodels.GroupeCours;
+import classmeetmodels.Utilisateur;
 
 public interface IServiceCours {
 
@@ -37,21 +38,36 @@ public interface IServiceCours {
 	/**
 	 * Fonction qui retourne un groupe par son numero
 	 */
-	public GroupeCours getGroupeParNumero(String sigleCours, String noGroupe);
+	public GroupeCours getGroupeParNumero(String sigleCours, int noGroupe);
 
+	/**
+	 * Fonction qui retourne la liste des utilisateurs par groupeCours
+	 */
+	public List<Utilisateur> getListeMembresParGroupeCours(String sigleCours, int noGroupe);
+	
 	/**
 	 * Fonction qui retourne la liste des equipes par groupeCours
 	 */
 	public List<Equipe> getListeEquipesParGroupeCours(String sigleCours, int noGroupe);
-
+	
 	/**
 	 * Fonction qui ajoute une equipe et retourne le status de la requête
 	 */
 	public int addEquipeParGroupeCours(Equipe nouvEquipe, String sigleCours, int noGroupe);
+	
+	/**
+	 * Fonction qui retourne une equipe par son numero
+	 */
+	public Equipe getEquipeParNoEquipe(String sigleCours, int noGroupe, int noEquipe);
 
+	/**
+	 * Fonction qui retourne la liste des membres d'une équipe
+	 */
+	public List<Utilisateur> getListeMembresParEquipe(String sigleCours, int noGroupe,int noEquipe);
+	
 	/**
 	 * Fonction qui ajoute un événement et retourne le status de la requête.
 	 */
-	public int addEvenement(Evenements nouvEvenement, String sigleCours, int noGroupe, int noEquipe);
+	public int addEvenement(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe);
 
 }

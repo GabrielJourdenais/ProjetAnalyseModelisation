@@ -62,7 +62,7 @@ texte VARCHAR(100),
 dateMessage VARCHAR(30),
 CONSTRAINT pk_Message PRIMARY KEY(idMessage),
 CONSTRAINT fk_Message_De FOREIGN KEY(de) REFERENCES Utilisateur(codeUtilisateur)
-ON DELETE NO ACTION ON UPDATE CASCADE,
+ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_Message_A FOREIGN KEY(a) REFERENCES Utilisateur(codeUtilisateur)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -74,7 +74,7 @@ CONSTRAINT pk_MessageRecus PRIMARY KEY(idMessage),
 CONSTRAINT fk_MessageRecus_ID FOREIGN KEY(idMessage) REFERENCES Message(idMessage)
 ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_MessageRecus_Code FOREIGN KEY(codeUtilisateur) REFERENCES Utilisateur(codeUtilisateur)
-ON DELETE NO ACTION ON UPDATE CASCADE
+ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE MessageEnvoye (
@@ -84,7 +84,7 @@ CONSTRAINT pk_MessageEnvoye PRIMARY KEY(idMessage),
 CONSTRAINT fk_MessageEnvoye_ID FOREIGN KEY(idMessage) REFERENCES Message(idMessage)
 ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_MessageEnvoye_Code FOREIGN KEY(codeUtilisateur) REFERENCES Utilisateur(codeUtilisateur)
-ON DELETE NO ACTION ON UPDATE CASCADE
+ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Equipe (
@@ -127,15 +127,16 @@ CONSTRAINT fk_Etudiant_Equipe_Etudiant FOREIGN KEY(codePermanent) REFERENCES Uti
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Evenements (
+CREATE TABLE Evenement (
 sigle VARCHAR(7),
 noGroupeCours INTEGER,
 noEquipe INTEGER,
 nom VARCHAR(10),
 description VARCHAR(30),
-dateEvenements VARCHAR(30),
+dateHeure DATETIME,
+duree INTEGER,
 lieu VARCHAR(30),
-CONSTRAINT pk_Evenements PRIMARY KEY(sigle, noGroupeCours, noEquipe, dateEvenements),
+CONSTRAINT pk_Evenements PRIMARY KEY(sigle, noGroupeCours, noEquipe, dateHeure),
 CONSTRAINT fk_Cours_Evenements FOREIGN KEY(sigle) REFERENCES Cours(sigle)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT fk_GroupeCours_Evenements FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)

@@ -18,7 +18,8 @@ import classmeetmodels.Cours;
 import classmeetmodels.Equipe;
 import classmeetmodels.GroupeCours;
 import classmeetmodels.MessageStatus;
-import classmeetmodels.Evenements;
+import classmeetmodels.Utilisateur;
+import classmeetmodels.Evenement;
 import classmeetservices.IServiceCours;
 import classmeetservices.ServiceCours;
 
@@ -134,7 +135,7 @@ public class RessourceCours implements IRessourceCours{
 	@Path("/{sigleCours}/groupes/{noGroupe}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public Response getGroupeParNumero(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") String noGroupe) {
+	public Response getGroupeParNumero(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe) {
 		try {
 			GroupeCours groupe = service.getGroupeParNumero(sigleCours,noGroupe);
 
@@ -143,6 +144,25 @@ public class RessourceCours implements IRessourceCours{
 						.build();
 			}
 			return Response.ok(Status.ACCEPTED).entity(groupe).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	@GET
+	@Path("/{sigleCours}/groupes/{noGroupe}/membres")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response getListeMembresParGroupeCours(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe){
+		List<Utilisateur> membres;
+		try {
+			membres = service.getListeMembresParGroupeCours(sigleCours,noGroupe);
+			if ((membres == null) || (membres.isEmpty())) {
+				return Response.noContent().status(Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
+						.build();
+			}
+			return Response.ok(Status.ACCEPTED).entity(membres).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
 					.header("Access-Control-Allow-Origin", "*").build();
@@ -183,13 +203,51 @@ public class RessourceCours implements IRessourceCours{
 					.header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
+	
+	@GET
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response getEquipeParNoEquipe(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe,@PathParam("noEquipe") int noEquipe) {
+		Equipe equipe;
+		try {
+			equipe = service.getEquipeParNoEquipe(sigleCours,noGroupe,noEquipe);
+			if ((equipe == null)) {
+				return Response.noContent().status(Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
+						.build();
+			}
+			return Response.ok(Status.ACCEPTED).entity(equipe).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
 
+	@GET
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/membres")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response getListeMembresParEquipe(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
+		List<Utilisateur> membres;
+		try {
+			membres = service.getListeMembresParEquipe(sigleCours,noGroupe,noEquipe);
+			if ((membres == null) || (membres.isEmpty())) {
+				return Response.noContent().status(Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
+						.build();
+			}
+			return Response.ok(Status.ACCEPTED).entity(membres).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
 	@POST
-	@Path("/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements")
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/evenements")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public Response addEvenement(Evenements nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
+	public Response addEvenement(Evenement nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
 		MessageStatus status;
 		try {
 			status = new MessageStatus(service.addEvenement(nouvEvenement, sigleCours, noGroupe, noEquipe));

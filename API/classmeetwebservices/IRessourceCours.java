@@ -1,12 +1,16 @@
 package classmeetwebservices;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import classmeetmodels.Cours;
 import classmeetmodels.Equipe;
 import classmeetmodels.GroupeCours;
-import classmeetmodels.Evenements;
+import classmeetmodels.Evenement;
 public interface IRessourceCours {
 
 	/**
@@ -47,12 +51,20 @@ public interface IRessourceCours {
 	 * @pathParam sigleCours
 	 * @pathParam noGroupe
 	 */
-	public Response getGroupeParNumero(String sigleCours, String noGroupe);
+	public Response getGroupeParNumero(String sigleCours, int noGroupe);
+	
+	/**
+	 * @GET url:
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/membres
+	 * 
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 */
+	public Response getListeMembresParGroupeCours(String sigleCours, int noGroupe);
 
 	/**
 	 * @GET url:
-	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/
-	 *      equipes
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes
 	 * 
 	 * @pathParam sigleCours
 	 * @pathParam noGroupe
@@ -61,22 +73,43 @@ public interface IRessourceCours {
 
 	/**
 	 * @POST url:
-	 *       localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/
-	 *       equipes
+	 *       localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes
 	 * 
 	 * @pathParam sigleCours
 	 * @pathParam noGroupe
 	 */
 	public Response addEquipeParGroupeCours(Equipe nouvEquipe, String sigleCours, int noGroupe);
 
-/**
- * @POST url: localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements
- *  
- * @pathParam nouvEvenement
- * @pathParam sigleCours
- * @pathParam noGroupe
- * @pathParam noEquipe
- */
-	public Response addEvenement(Evenements nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe);
+	/**
+	 * @GET url:
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}
+	 * 
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 */
+	public Response getEquipeParNoEquipe(String sigleCours,int noGroupe,int noEquipe);
+	
+	
+	/**
+	 * @GET url:
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/membres
+	 * 
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 */
+	public Response getListeMembresParEquipe(String sigleCours,int noGroupe,int noEquipe);
+		
+	
+	/**
+	 * @POST url: localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements
+	 *  
+	 * @pathParam nouvEvenement
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 */
+	public Response addEvenement(Evenement nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe);
 
 }

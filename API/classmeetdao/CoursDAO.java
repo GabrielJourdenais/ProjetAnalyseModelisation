@@ -11,9 +11,10 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import apps.config.AppSpringConfigDatabase;
 import classmeetmodels.Cours;
 import classmeetmodels.Equipe;
-import classmeetmodels.Evenements;
+import classmeetmodels.Evenement;
 import classmeetmodels.GroupeCours;
 import classmeetmodels.SessionCours;
+import classmeetmodels.Utilisateur;
 
 public class CoursDAO implements ICoursDAO {
 
@@ -59,7 +60,7 @@ public class CoursDAO implements ICoursDAO {
 
 	@Override
 	public int addGroupeParCours(GroupeCours nouvGroupeCours, String sigleCours) {
-		String query = "insert into GroupeCours values(" + "'" + nouvGroupeCours.getNoGroupeCours() + "'," + "'"
+		String query = "insert into GroupeCours values(" + nouvGroupeCours.getNoGroupeCours() + "," + "'"
 				+ nouvGroupeCours.getSession() + "'," + "'" + nouvGroupeCours.getAnnee() + "'," + "'"
 				+ nouvGroupeCours.getCodeEnseignant() + "'," + "'" + sigleCours + "'" + ")";
 		SqlParameterSource namedParameters = null;
@@ -67,38 +68,80 @@ public class CoursDAO implements ICoursDAO {
 	}
 
 	@Override
-	public GroupeCours getGroupeParNumero(String sigleCours, String noGroupe) {
-		String query = "select * from GroupeCours where sigle='" + sigleCours + "' and noGroupeCours='" + noGroupe
-				+ "'";
+	public GroupeCours getGroupeParNumero(String sigleCours, int noGroupe) {
+		String query = "select * from GroupeCours where sigle='" + sigleCours + "' and noGroupeCours=" + noGroupe;
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.queryForObject(query, namedParameters, new GroupeCoursMapper());
+	}
+	
+	@Override
+	public List<Utilisateur> getListeMembresParGroupeCours(String sigleCours, int noGroupe) {
+		String query = "select Utilisateur.codeUtilisateur,Utilisateur.motDePasse,Utilisateur.prenom,"
+		+"Utilisateur.nom,Utilisateur.courriel,Utilisateur.typeUtilisateur from Utilisateur,UtilisateurGroupeCours"
+				+" where UtilisateurGroupeCours.sigle='" 
+				+ sigleCours + "' and UtilisateurGroupeCours.noGroupeCours=" + noGroupe +
+				" and Utilisateur.codeUtilisateur = UtilisateurGroupeCours.codePermanent";
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.query(query, namedParameters, new UtilisateurMapper());
 	}
 
 	@Override
 	public List<Equipe> getListeEquipesParGroupeCours(String sigleCours, int noGroupe) {
-		String query = "select * from Equipe where sigle='" + sigleCours + "' and noGroupeCours='" + noGroupe + "'";
+		String query = "select * from Equipe where sigle='" + sigleCours + "' and noGroupeCours=" + noGroupe ;
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.query(query, namedParameters, new EquipeMapper());
 	}
-
+	
 	@Override
 	public int addEquipeParGroupeCours(Equipe nouvEquipe, String sigleCours, int noGroupe) {
-		String query = "insert into Equipe values(" + "'" + nouvEquipe.getNoEquipe() + "'," + "'"
+		String query = "insert into Equipe values(" + nouvEquipe.getNoEquipe() + "," + "'"
 				+ nouvEquipe.getNomEquipe() + "'," + "'" + nouvEquipe.getChefEquipe() + "'," + "'" + sigleCours + "',"
-				+ "'" + noGroupe + "'" + ")";
+				+  noGroupe  + ")";
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.update(query, namedParameters);
 	}
 
 	@Override
-	public int addEvenement(Evenements nouvEvenement, String sigleCours, int noGroupe, int noEquipe) {
+	public Equipe getEquipeParNoEquipe(String sigleCours, int noGroupe, int noEquipe){
+		String query = "select * from Equipe where sigle='" + sigleCours + "' and noGroupeCours=" + noGroupe
+				+ " and noEquipe = " + noEquipe;
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.queryForObject(query, namedParameters, new EquipeMapper());
+	}
+	
+	@Override
+	public List<Utilisateur> getListeMembresParEquipe(String sigleCours, int noGroupe,int noEquipe) {
+		String query = "select Utilisateur.codeUtilisateur,Utilisateur.motDePasse,Utilisateur.prenom,"
+				+"Utilisateur.nom,Utilisateur.courriel,Utilisateur.typeUtilisateur from Utilisateur,EtudiantEquipe "
+						+" where EtudiantEquipe.sigle='" 
+						+ sigleCours + "' and EtudiantEquipe.noGroupeCours=" + noGroupe
+						+ " and EtudiantEquipe.noEquipe=" + noEquipe +
+						" and Utilisateur.codeUtilisateur = EtudiantEquipe.codePermanent";
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.query(query, namedParameters, new UtilisateurMapper());
+	}
+	
+	@Override
+	public int addEvenement(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe) {
 		String query = "insert into Evenements values(" + "'" + sigleCours + "'," + "'" + noGroupe + "'," + "'"
-				+ noEquipe + "'," + "'" + nouvEvenement.getNom() + "'," + "'" + nouvEvenement.getDescription() + "',"
-				+ "'" + nouvEvenement.getDateEvenements() + "'," + "'" + nouvEvenement.getLieu() + "'" + ")";
+				+ noEquipe + "'," +null+ ",'" + nouvEvenement.getNom() + "'," + "'" + nouvEvenement.getDescription() + "',"
+				/*+ nouvEvenement.getDateHeure() */+ "," + /*nouvEvenement.Duree() +*/",'" + nouvEvenement.getLieu() + "'" + ")";
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.update(query, namedParameters);
 	}
 
+	public static final class UtilisateurMapper implements RowMapper<Utilisateur> {
+
+		@Override
+		public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+			Utilisateur utilisateur = new Utilisateur(rs.getString(1), rs.getString(2), rs.getString(3),
+					rs.getString(4), rs.getString(5), rs.getString(6));
+
+			return utilisateur;
+		}
+	}
+	
 	public static final class CoursMapper implements RowMapper<Cours> {
 
 		@Override
@@ -131,6 +174,18 @@ public class CoursDAO implements ICoursDAO {
 					rs.getInt(5));
 
 			return uneEquipe;
+		}
+	}
+	
+	public static final class EvenementMapper implements RowMapper<Evenement> {
+
+		@Override
+		public Evenement mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+			Evenement unEvenement = new Evenement(rs.getString(4),
+					rs.getString(5),rs.getString(6),rs.getString(7));
+
+			return unEvenement;
 		}
 	}
 }
