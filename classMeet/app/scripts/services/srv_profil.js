@@ -71,6 +71,29 @@ define([
 		}
 		return profilCookie;
 	})
+    .factory('Equipes', function($q,$cookies) {
+        var profilCookie={};
+        profilCookie.setGroupeCoursCourant=function(groupeCours){
+            $cookies.putObject("groupeCours", groupeCours);
+        }
+        profilCookie.getGroupeCoursCourant=function(){
+			return $cookies.getObject("groupeCours");
+		}
+		profilCookie.deleteGroupeCoursCourant=function(){
+			$cookies.remove("groupeCours");
+		}
+        
+        profilCookie.setEquipeCourant=function(equipe){
+            $cookies.putObject("equipe", equipe);
+        }
+        profilCookie.getEquipeCourant=function(equipe){
+            return $cookies.getObject("equipe");
+        }
+        profilCookie.setEquipeCourant=function(equipe){
+            $cookies.remove("equipe");
+        }
+        return profilCookie;
+    })
 	.factory('CoursService', function($q,$http) {
 		var service={};
 		service.getGroupeCours=function(username){

@@ -2,20 +2,12 @@ define([
     'angular',
     '../services/srv_auth.js'
 ], function(ng) {
-  var app=ng.module('classMeetApp.acceuil', [
-    "classMeetApp.authService"
+  var app=ng.module('classMeetApp.equipes', [
+    "classMeetApp.profilService"
   ])
-  .controller('EquipesCtrl',function($scope,$window,Session){
-    $scope.listeEquipes=[
-    {noEquipe:0, nomEquipe:"Test", chefEquipe:"Maxime", sigleCours:"INM5151",noGroupeCours:10},
-    {noEquipe:1, nomEquipe:"Test2", chefEquipe:"Vincent", sigleCours:"INM5151",noGroupeCours:10}
-    {noEquipe:2, nomEquipe:"Test3", chefEquipe:"Gabriel", sigleCours:"INM5151",noGroupeCours:10}
-    ];
-    $scope.listeCoequipiers=[
-    {nom:"Test",prenom:"Test"}
-    {nom:"Test1",prenom:"Test1"}
-    {nom:"Test2",prenom:"Test2"}
-    ];
+  .controller('EquipesCtrl',function($scope,$window,Profil,Equipes){
+    $scope.groupecourscourant=Equipes.getGroupeCoursCourant();
+    $scope.listeEquipes=null;
     $scope.nouvelleEquipe={
         'noEquipe':"",
         'nomEquipe':"",
@@ -24,7 +16,7 @@ define([
         'noGroupeCours':""
     };
     $scope.creerEquipe=function(){
-    }
+    };
   })
   return app
 })

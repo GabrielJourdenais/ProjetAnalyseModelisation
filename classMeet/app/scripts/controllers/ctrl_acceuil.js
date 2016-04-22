@@ -7,10 +7,13 @@ define([
     "classMeetApp.authService",
     "classMeetApp.profilService"
   ])
-  .controller('AcceuilCtrl',function($scope,$window,Session,Profil,GroupesCours){
+  .controller('AcceuilCtrl',function($scope,$window,Session,Profil,GroupesCours,Equipes){
     $scope.profil=Profil.getProfilCourant();
     $scope.listeCours=GroupesCours.getGroupesCoursCourant();
-    
+    $scope.accederGroupe=function(cour){
+        Equipes.setGroupeCoursCourant(cour);
+        $window.location="/#/equipes";
+    }
   })
   return app
 })

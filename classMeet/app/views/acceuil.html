@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="disable-text-selection" ng-repeat="cour in listeCours">
+      <tr ng-click=accederGroupe(cour) class="disable-text-selection" ng-repeat="cour in listeCours">
         <td>{{cour.sigle}}</td>
         <td>{{cour.titre}}</td>
         <td>Gr.{{cour.noGroupeCours}}</td>
