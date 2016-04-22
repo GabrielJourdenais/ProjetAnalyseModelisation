@@ -5,11 +5,11 @@ define([
 	])
 	.factory('CoursService', function($q,$http) {
 		var service={};
-		service.getGroupeCours=function(username){
+		service.getGroupeCours=function(sigle,noGroupe){
 			var defer=$q.defer();
 			$http({
 				method: 'GET',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/groupesCours',
+				url: 'http://localhost:7001/ClassMeet/v1/cours/'+sigle+'/groupes/'+noGroupe,
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {
@@ -17,15 +17,23 @@ define([
 			});
 			return defer.promise;
 		}
-		service.addGroupeCours=function(username,sigleCours,noGroupe){
+		service.getMembresGroupeCours=function(sigle,noGroupe){
 			var defer=$q.defer();
 			$http({
-				method: 'POST',
-				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/groupesCours',
-				data: {
-						sigle:sigleCours,
-    					noGroupeCours:noGroupe
-    			}
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/cours/'+sigle+'/groupes/'+noGroupe+'/membres',
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		service.getEquipesGroupeCours=function(sigle,noGroupe){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/cours/'+sigle+'/groupes/'+noGroupe+'/equipes',
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {

@@ -58,20 +58,20 @@ define([
 		}
 		return profilCookie;
 	})
-	.factory('GroupesCours', function($q,$cookies) {
-		var profilCookie={};
-		profilCookie.setGroupesCoursCourant=function(groupesCours){
+	.factory('GroupesCoursUtilisateur', function($q,$cookies) {
+		var groupeCoursCookie={};
+		groupeCoursCookie.setGroupesCoursCourant=function(groupesCours){
 			$cookies.putObject("groupesCours",groupesCours);
 		}
-		profilCookie.getGroupesCoursCourant=function(){
+		groupeCoursCookie.getGroupesCoursCourant=function(){
 			return $cookies.getObject("groupesCours");
 		}
-		profilCookie.deleteGroupesCoursCourant=function(){
+		groupeCoursCookie.deleteGroupesCoursCourant=function(){
 			$cookies.remove("groupesCours");
 		}
-		return profilCookie;
+		return groupeCoursCookie;
 	})
-	.factory('CoursService', function($q,$http) {
+	.factory('GroupesCoursUtilisateurService', function($q,$http) {
 		var service={};
 		service.getGroupeCours=function(username){
 			var defer=$q.defer();

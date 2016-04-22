@@ -3,11 +3,13 @@ define([
     'angular_route',
     'angular_ui_bootstrap',
     './scripts/services/srv_auth.js',
+    './scripts/services/srv_profil.js',
     './scripts/controllers/ctrl_acceuil.js',
     './scripts/controllers/ctrl_configProfil.js',
     './scripts/controllers/ctrl_messagerie.js',
     './scripts/controllers/ctrl_nouveauMessage.js',
     './scripts/controllers/ctrl_messagesEnvoyes.js',
+    './scripts/controllers/ctrl_calendrier.js',
     './scripts/controllers/ctrl_login.js',
     './scripts/controllers/ctrl_recupMDP.js',
     './scripts/controllers/ctrl_menu.js'
@@ -15,16 +17,18 @@ define([
   var app=ng.module('classMeetApp', [
     'ngRoute',
     'classMeetApp.authService',
+    'classMeetApp.profilService',
     'classMeetApp.acceuil',
     'classMeetApp.profil',
     'classMeetApp.messagerie',
     'classMeetApp.nouveauMessage',
     'classMeetApp.messagesEnvoyes',
+    'classMeetApp.calendrier',
     'classMeetApp.login',
     'classMeetApp.recupMDP',
     'classMeetApp.menu'
   ])
-  .config(["$routeProvider","$locationProvider",function ($routeProvider,$locationProvider,Session) {
+  .config(["$routeProvider","$locationProvider",function ($routeProvider,$locationProvider,Session,GroupesCoursUtilisateur) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/acceuil.html',
@@ -70,6 +74,39 @@ define([
         templateUrl: 'views/nouveauMessage.html',
         controller: 'NouveauMessageCtrl',
         controllerAs: 'nouveauMessage',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
+      /*.when('/cours/:sigle/:noGroupe', {
+        templateUrl: 'views/cours.html',
+        controller: 'CoursCtrl',
+        controllerAs: 'cours',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          },
+          currentGroupeCours: function(GroupesCoursUtilisateur){
+            return GroupesCoursUtilisateur.getGroupeCours();
+          }
+        }
+      })*/
+      /*.when('/cours/:sigle/:noGroupe/', {
+        templateUrl: 'views/configProfil.html',
+        controller: 'ProfilCtrl',
+        controllerAs: 'profil',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })*/
+      .when('/calendrier', {
+        templateUrl: 'views/calendrier.html',
+        controller: 'CalendrierCtrl',
+        controllerAs: 'calendrier',
         resolve: {
           currentSession: function(Session){
             return Session.validateSession();

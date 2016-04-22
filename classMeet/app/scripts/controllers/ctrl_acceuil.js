@@ -7,9 +7,9 @@ define([
     "classMeetApp.authService",
     "classMeetApp.profilService"
   ])
-  .controller('AcceuilCtrl',function($scope,$window,Session,Profil,GroupesCours){
+  .controller('AcceuilCtrl',function($scope,$window,Session,Profil,GroupesCoursUtilisateur){
     $scope.profil=Profil.getProfilCourant();
-    $scope.listeCours=GroupesCours.getGroupesCoursCourant();
+    $scope.listeCours=GroupesCoursUtilisateur.getGroupesCoursCourant();
     
   })
   return app
