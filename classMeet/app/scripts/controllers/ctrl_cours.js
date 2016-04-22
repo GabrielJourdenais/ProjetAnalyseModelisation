@@ -3,6 +3,7 @@ define([
     '../services/srv_auth.js',
     '../services/srv_cours.js'
 ], function(ng) {
+<<<<<<< HEAD:classMeet/app/scripts/controllers/ctrl_cours.js
   var app=ng.module('classMeetApp.cours', [
     "classMeetApp.authService",
     "classMeetApp.coursService"
@@ -18,6 +19,14 @@ define([
     {nom:"Test1",prenom:"Test1"}
     {nom:"Test2",prenom:"Test2"}
     ];
+=======
+  var app=ng.module('classMeetApp.equipes', [
+    "classMeetApp.profilService"
+  ])
+  .controller('EquipesCtrl',function($scope,$window,Profil,Equipes){
+    $scope.groupecourscourant=Equipes.getGroupeCoursCourant();
+    $scope.listeEquipes=null;
+>>>>>>> bab7237d78e707b9ff83e0a8a14543854593b448:classMeet/app/scripts/controllers/ctrl_equipes.js
     $scope.nouvelleEquipe={
         'noEquipe':"",
         'nomEquipe':"",
@@ -26,7 +35,7 @@ define([
         'noGroupeCours':""
     };
     $scope.creerEquipe=function(){
-    }
+    };
   })
   return app;
 })

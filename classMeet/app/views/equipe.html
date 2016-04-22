@@ -1,0 +1,24 @@
+<div ng-include="'views/menu/menu.html'"></div>
+<div ng-controller="EquipeCtrl">
+  <h3>{{groupecourscourant.sigle}}-{{groupecourscourant.noGroupe}}</h3>
+  <h4>{{equipecourante.nom}}</h4>
+  <br />
+  <form id="envoyerMessage">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="disable-text-selection" ng-repeat="coequipier in listeCoequipiers">
+            <td>{{coequipier.nom}}</td>
+            <td>{{coequipier.prenom}}</td>
+            <td> <a href="#"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></td>
+          </tr>
+        </tbody>
+      </table>
+  </form>
+</div>

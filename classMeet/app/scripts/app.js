@@ -6,6 +6,8 @@ define([
     './scripts/services/srv_profil.js',
     './scripts/controllers/ctrl_acceuil.js',
     './scripts/controllers/ctrl_configProfil.js',
+    './scripts/controllers/ctrl_equipes.js',
+    './scripts/controllers/ctrl_equipe.js',
     './scripts/controllers/ctrl_messagerie.js',
     './scripts/controllers/ctrl_nouveauMessage.js',
     './scripts/controllers/ctrl_messagesEnvoyes.js',
@@ -20,6 +22,8 @@ define([
     'classMeetApp.profilService',
     'classMeetApp.acceuil',
     'classMeetApp.profil',
+    'classMeetApp.equipes',
+    'classMeetApp.equipe',
     'classMeetApp.messagerie',
     'classMeetApp.nouveauMessage',
     'classMeetApp.messagesEnvoyes',
@@ -44,6 +48,26 @@ define([
         templateUrl: 'views/configProfil.html',
         controller: 'ProfilCtrl',
         controllerAs: 'profil',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
+      .when('/equipes', {
+        templateUrl: 'views/equipes.html',
+        controller: 'EquipesCtrl',
+        controllerAs: 'equipes',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
+      .when('/equipe', {
+        templateUrl: 'views/equipe.html',
+        controller: 'EquipeCtrl',
+        controllerAs: 'equipe',
         resolve: {
           currentSession: function(Session){
             return Session.validateSession();
