@@ -124,18 +124,18 @@ public class ServiceCours implements IServiceCours {
 	}
 	
 	@Override
-	public List<Utilisateur> getListeMembresParEquipe(String sigleCours, int noGroupe, int noEquipe) {
+	public List<Utilisateur> getListeRequetesMembreParEquipe(String sigleCours, int noGroupe, int noEquipe) {
 		try {
-			return dao.getListeMembresParEquipe(sigleCours, noGroupe, noEquipe);
+			return dao.getListeRequetesMembreParEquipe(sigleCours, noGroupe, noEquipe);
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	@Override
-	public int addEvenement(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe) {
+	public int addRequetesMembreParEquipe(Utilisateur requeteMembre, String sigleCours, int noGroupe, int noEquipe) {
 		try {
-			int nbLignes = dao.addEvenement(nouvEvenement, sigleCours, noGroupe, noEquipe);
+			int nbLignes = dao.addRequetesMembreParEquipe(requeteMembre, sigleCours, noGroupe, noEquipe);
 			if (nbLignes > 0) {
 				return 1;
 			} else {
@@ -146,8 +146,51 @@ public class ServiceCours implements IServiceCours {
 		}
 	}
 
+	@Override
+	public int removeRequetesMembreParEquipe(String sigleCours, int noGroupe, int noEquipe,String codeUtilisateur) {
+		try {
+			int nbLignes = dao.removeRequetesMembreParEquipe(sigleCours, noGroupe, noEquipe,codeUtilisateur);
+			if (nbLignes > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 	
+	@Override
+	public List<Utilisateur> getListeMembresParEquipe(String sigleCours, int noGroupe, int noEquipe) {
+		try {
+			return dao.getListeMembresParEquipe(sigleCours, noGroupe, noEquipe);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Evenement> getListeEvenementParEquipe(String sigleCours, int noGroupe, int noEquipe) {
+		try {
+			return dao.getListeEvenementParEquipe(sigleCours, noGroupe, noEquipe);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public int addEvenementParEquipe(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe) {
+		try {
+			int nbLignes = dao.addEvenementParEquipe(nouvEvenement, sigleCours, noGroupe, noEquipe);
+			if (nbLignes > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 
-	
 
 }

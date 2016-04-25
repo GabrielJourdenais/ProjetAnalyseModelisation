@@ -7,12 +7,13 @@ define([
     "classMeetApp.authService",
     "classMeetApp.profilService"
   ])
-  .controller('MenuCtrl',function($scope,$window,Session,Profil,GroupesCoursUtilisateur){
+  .controller('MenuCtrl',function($scope,$window,Session,Profil,GroupesCoursUtilisateur,Equipes){
    	$scope.deconnection=function()
     {
       Session.deleteSession();
       Profil.deleteProfilCourant();
       GroupesCoursUtilisateur.deleteGroupesCoursCourant();
+      Equipes.deleteEquipeCourante()
       $window.location.href="/";
     }
   })

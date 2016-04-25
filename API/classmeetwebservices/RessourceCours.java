@@ -3,6 +3,7 @@ package classmeetwebservices;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
@@ -115,6 +116,15 @@ public class RessourceCours implements IRessourceCours{
 		}
 	}
 
+	@OPTIONS
+	@Path("/{sigleCours}/groupes")
+	public Response addGroupeParCoursPreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+	
 	@POST
 	@Path("/{sigleCours}/groupes")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -188,6 +198,15 @@ public class RessourceCours implements IRessourceCours{
 		}
 	}
 
+	@OPTIONS
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes")
+	public Response addEquipeParGroupeCoursPreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+	
 	@POST
 	@Path("/{sigleCours}/groupes/{noGroupe}/equipes")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -242,20 +261,117 @@ public class RessourceCours implements IRessourceCours{
 		}
 	}
 	
+	@GET
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response getListeRequetesMembreParEquipe(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe,@PathParam("noEquipe") int noEquipe) {
+		List<Utilisateur> requetesMembre;
+		try {
+			requetesMembre = service.getListeRequetesMembreParEquipe(sigleCours,noGroupe,noEquipe);
+			if ((requetesMembre == null) || (requetesMembre.isEmpty())) {
+				return Response.noContent().status(Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
+						.build();
+			}
+			return Response.ok(Status.ACCEPTED).entity(requetesMembre).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+
+	@OPTIONS
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre")
+	public Response addRequetesMembreParEquipePreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+	
 	@POST
-	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/evenements")
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Override
-	public Response addEvenement(Evenement nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
+	public Response addRequetesMembreParEquipe(Utilisateur requeteMembre,@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe,@PathParam("noEquipe") int noEquipe) {
 		MessageStatus status;
 		try {
-			status = new MessageStatus(service.addEvenement(nouvEvenement, sigleCours, noGroupe, noEquipe));
+			status = new MessageStatus(service.addRequetesMembreParEquipe(requeteMembre,sigleCours,noGroupe,noEquipe));
 			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
 		} catch (Exception e) {
 			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
 					.header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
+
+	@OPTIONS
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre/{codeUtilisateur}")
+	public Response removeRequetesMembreParEquipePreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST,DELETE")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+	@DELETE
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre/{codeUtilisateur}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response removeRequetesMembreParEquipe(@PathParam("sigleCours") String sigleCours,@PathParam("noGroupe") int noGroupe,@PathParam("noEquipe") int noEquipe,@PathParam("codeUtilisateur") String codeUtilisateur) {
+		MessageStatus status;
+		try {
+			status = new MessageStatus(service.removeRequetesMembreParEquipe(sigleCours,noGroupe,noEquipe,codeUtilisateur));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	@GET
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/evenements")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response getListeEvenementParEquipe(@PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
+		List<Evenement> evenements;
+		try {
+			evenements = service.getListeEvenementParEquipe(sigleCours,noGroupe,noEquipe);
+			if ((evenements == null) || (evenements.isEmpty())) {
+				return Response.noContent().status(Status.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
+						.build();
+			}
+			return Response.ok(Status.ACCEPTED).entity(evenements).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	@OPTIONS
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/evenements")
+	public Response addEvenementParEquipePreflight() {
+		return Response.noContent().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "GET,POST")
+				.header("Access-Control-Allow-Headers", "accept,content-type").header("Access-Control-Max-Age", 600)
+				.build();
+	}
+	
+	@POST
+	@Path("/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/evenements")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Override
+	public Response addEvenementParEquipe(Evenement nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe) {
+		MessageStatus status;
+		try {
+			status = new MessageStatus(service.addEvenementParEquipe(nouvEvenement, sigleCours, noGroupe, noEquipe));
+			return Response.ok(Status.ACCEPTED).entity(status).header("Access-Control-Allow-Origin", "*").build();
+		} catch (Exception e) {
+			return Response.serverError().status(Status.INTERNAL_SERVER_ERROR).entity("error 500")
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+
+	
 
 }

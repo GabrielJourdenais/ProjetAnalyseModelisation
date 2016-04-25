@@ -71,9 +71,6 @@ define([
 		}
 		return groupeCoursCookie;
 	})
-<<<<<<< HEAD
-	.factory('GroupesCoursUtilisateurService', function($q,$http) {
-=======
     .factory('Equipes', function($q,$cookies) {
         var profilCookie={};
         profilCookie.setGroupeCoursCourant=function(groupeCours){
@@ -86,19 +83,18 @@ define([
 			$cookies.remove("groupeCours");
 		}
         
-        profilCookie.setEquipeCourant=function(equipe){
+        profilCookie.setEquipeCourante=function(equipe){
             $cookies.putObject("equipe", equipe);
         }
-        profilCookie.getEquipeCourant=function(equipe){
+        profilCookie.getEquipeCourante=function(equipe){
             return $cookies.getObject("equipe");
         }
-        profilCookie.setEquipeCourant=function(equipe){
+        profilCookie.deleteEquipeCourante=function(equipe){
             $cookies.remove("equipe");
         }
         return profilCookie;
     })
-	.factory('CoursService', function($q,$http) {
->>>>>>> bab7237d78e707b9ff83e0a8a14543854593b448
+	.factory('GroupesCoursUtilisateurService', function($q,$http) {
 		var service={};
 		service.getGroupeCours=function(username){
 			var defer=$q.defer();
@@ -121,6 +117,35 @@ define([
 						sigle:sigleCours,
     					noGroupeCours:noGroupe
     			}
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		return service;
+	})
+	.factory('EquipeUtilisateurService', function($q,$http) {
+		var service={};
+		service.getEquipeGroupeCours=function(username,sigle){
+			var defer=$q.defer();
+			$http({
+				method: 'GET',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/equipes/'+sigle,
+			}).then(function successCallback(response) {
+				defer.resolve(response.data);
+			}, function errorCallback(response) {
+				defer.reject("La requête a échoué");
+			});
+			return defer.promise;
+		}
+		service.addEquipe=function(username,equipe){
+			var defer=$q.defer();
+			$http({
+				method: 'POST',
+				url: 'http://localhost:7001/ClassMeet/v1/profils/'+username+'/equipes',
+				data: equipe
 			}).then(function successCallback(response) {
 				defer.resolve(response.data);
 			}, function errorCallback(response) {

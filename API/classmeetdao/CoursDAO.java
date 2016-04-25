@@ -2,6 +2,8 @@ package classmeetdao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -110,6 +112,35 @@ public class CoursDAO implements ICoursDAO {
 	}
 	
 	@Override
+	public List<Utilisateur> getListeRequetesMembreParEquipe(String sigleCours, int noGroupe, int noEquipe) {
+		String query = "select Utilisateur.codeUtilisateur,Utilisateur.motDePasse,Utilisateur.prenom,"
+				+"Utilisateur.nom,Utilisateur.courriel,Utilisateur.typeUtilisateur from Utilisateur,RequeteMembreEquipe "
+						+" where RequeteMembreEquipe.sigle='" 
+						+ sigleCours + "' and RequeteMembreEquipe.noGroupeCours=" + noGroupe
+						+ " and RequeteMembreEquipe.noEquipe=" + noEquipe +
+						" and Utilisateur.codeUtilisateur = RequeteMembreEquipe.codePermanent";
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.query(query, namedParameters, new UtilisateurMapper());
+	}
+
+	@Override
+	public int addRequetesMembreParEquipe(Utilisateur requeteMembre, String sigleCours, int noGroupe, int noEquipe) {
+		String query = "insert into RequeteMembreEquipe values(" + "'" + sigleCours + "'," + noGroupe + "," 
+				+ noEquipe + ",'" + requeteMembre.getCodeUtilisateur() + "')";
+
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.update(query, namedParameters);
+	}
+
+	@Override
+	public int removeRequetesMembreParEquipe(String sigleCours, int noGroupe, int noEquipe, String codeUtilisateur) {
+		String query = "delete from RequeteMembreEquipe where codePermanent='"+codeUtilisateur+"'";
+
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.update(query, namedParameters);
+	}
+	
+	@Override
 	public List<Utilisateur> getListeMembresParEquipe(String sigleCours, int noGroupe,int noEquipe) {
 		String query = "select Utilisateur.codeUtilisateur,Utilisateur.motDePasse,Utilisateur.prenom,"
 				+"Utilisateur.nom,Utilisateur.courriel,Utilisateur.typeUtilisateur from Utilisateur,EtudiantEquipe "
@@ -122,10 +153,20 @@ public class CoursDAO implements ICoursDAO {
 	}
 	
 	@Override
-	public int addEvenement(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe) {
-		String query = "insert into Evenements values(" + "'" + sigleCours + "'," + "'" + noGroupe + "'," + "'"
-				+ noEquipe + "'," +null+ ",'" + nouvEvenement.getNom() + "'," + "'" + nouvEvenement.getDescription() + "',"
-				/*+ nouvEvenement.getDateHeure() */+ "," + /*nouvEvenement.Duree() +*/",'" + nouvEvenement.getLieu() + "'" + ")";
+	public List<Evenement> getListeEvenementParEquipe(String sigleCours, int noGroupe, int noEquipe) {
+		String query = "select * from Evenement"
+				+" where sigle='" + sigleCours + "' and noGroupeCours=" + noGroupe
+						+ " and noEquipe=" + noEquipe;
+		SqlParameterSource namedParameters = null;
+		return this.jdbcTemplate.query(query, namedParameters,new EvenementMapper());
+	}
+	
+	@Override
+	public int addEvenementParEquipe(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe) {
+		String query = "insert into Evenement values(" + "'" + sigleCours + "'," + noGroupe + "," 
+				+ noEquipe + ",'" + nouvEvenement.getNom() + "'," + "'" + nouvEvenement.getDescription() + "','"
+				+ nouvEvenement.getDateHeureEvenement() + "'," + nouvEvenement.getDureeM() + ",'" + nouvEvenement.getLieu() + "'" + ")";
+
 		SqlParameterSource namedParameters = null;
 		return this.jdbcTemplate.update(query, namedParameters);
 	}
@@ -182,10 +223,13 @@ public class CoursDAO implements ICoursDAO {
 		@Override
 		public Evenement mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-			Evenement unEvenement = new Evenement(rs.getString(4),
-					rs.getString(5),rs.getString(6),rs.getString(7));
+			Evenement unEvenement=new Evenement();
+				unEvenement = new Evenement(rs.getString(4),
+						rs.getString(5),rs.getTimestamp(6),rs.getInt(7),rs.getString(8));
 
 			return unEvenement;
 		}
 	}
+
+	
 }

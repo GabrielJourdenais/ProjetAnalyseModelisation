@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 import classmeetmodels.Cours;
 import classmeetmodels.Equipe;
 import classmeetmodels.GroupeCours;
+import classmeetmodels.Utilisateur;
 import classmeetmodels.Evenement;
 public interface IRessourceCours {
 
@@ -103,13 +104,52 @@ public interface IRessourceCours {
 		
 	
 	/**
-	 * @POST url: localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements
-	 *  
-	 * @pathParam nouvEvenement
+	 * @GET url:
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre
+	 * 
 	 * @pathParam sigleCours
 	 * @pathParam noGroupe
 	 * @pathParam noEquipe
 	 */
-	public Response addEvenement(Evenement nouvEvenement, @PathParam("sigleCours") String sigleCours, @PathParam("noGroupe") int noGroupe, @PathParam("noEquipe") int noEquipe);
+	public Response getListeRequetesMembreParEquipe(String sigleCours,int noGroupe,int noEquipe);
+	
+	/**
+	 * @POST url:
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre
+	 * 
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 */
+	public Response addRequetesMembreParEquipe(Utilisateur requeteMembre,String sigleCours,int noGroupe,int noEquipe);
+	
+	/**
+	 * @DELETE url:
+	 *      localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupes/{noGroupe}/equipes/{noEquipe}/requetesMembre/{codeUtilisateur}
+	 * 
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 * @pathParam codeUtilisateur
+	 */
+	public Response removeRequetesMembreParEquipe(String sigleCours,int noGroupe,int noEquipe,String codeUtilisateur);
+	
+	/**
+	 * @GET url: localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements
+	 *  
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 */
+	public Response getListeEvenementParEquipe(String sigleCours, int noGroupe, int noEquipe);
+	
+	/**
+	 * @POST url: localhost:7001/ClassMeet/v1/cours/{sigleCours}/groupesCours/{noGroupe}/equipes/{noEquipe}/evenements
+	 *  
+	 * @pathParam sigleCours
+	 * @pathParam noGroupe
+	 * @pathParam noEquipe
+	 */
+	public Response addEvenementParEquipe(Evenement nouvEvenement, String sigleCours, int noGroupe, int noEquipe);
 
 }

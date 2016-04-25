@@ -7,10 +7,10 @@ define([
     './scripts/controllers/ctrl_acceuil.js',
     './scripts/controllers/ctrl_configProfil.js',
     './scripts/controllers/ctrl_equipes.js',
-    './scripts/controllers/ctrl_equipe.js',
     './scripts/controllers/ctrl_messagerie.js',
     './scripts/controllers/ctrl_nouveauMessage.js',
     './scripts/controllers/ctrl_messagesEnvoyes.js',
+    './scripts/controllers/ctrl_equipe.js',
     './scripts/controllers/ctrl_calendrier.js',
     './scripts/controllers/ctrl_login.js',
     './scripts/controllers/ctrl_recupMDP.js',
@@ -23,16 +23,16 @@ define([
     'classMeetApp.acceuil',
     'classMeetApp.profil',
     'classMeetApp.equipes',
-    'classMeetApp.equipe',
     'classMeetApp.messagerie',
     'classMeetApp.nouveauMessage',
     'classMeetApp.messagesEnvoyes',
+    'classMeetApp.equipe',
     'classMeetApp.calendrier',
     'classMeetApp.login',
     'classMeetApp.recupMDP',
     'classMeetApp.menu'
   ])
-  .config(["$routeProvider","$locationProvider",function ($routeProvider,$locationProvider,Session,GroupesCoursUtilisateur) {
+  .config(["$routeProvider","$locationProvider",function ($routeProvider,$locationProvider,Session,GroupesCoursUtilisateur,EquipeUtilisateurService) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/acceuil.html',
@@ -74,6 +74,16 @@ define([
           }
         }
       })
+       .when('/calendrier', {
+        templateUrl: 'views/calendrier.html',
+        controller: 'CalendrierCtrl',
+        controllerAs: 'calendrier',
+        resolve: {
+          currentSession: function(Session){
+            return Session.validateSession();
+          }
+        }
+      })
       .when('/messagerie', {
         templateUrl: 'views/messagerie.html',
         controller: 'MessagerieCtrl',
@@ -104,39 +114,7 @@ define([
           }
         }
       })
-      /*.when('/cours/:sigle/:noGroupe', {
-        templateUrl: 'views/cours.html',
-        controller: 'CoursCtrl',
-        controllerAs: 'cours',
-        resolve: {
-          currentSession: function(Session){
-            return Session.validateSession();
-          },
-          currentGroupeCours: function(GroupesCoursUtilisateur){
-            return GroupesCoursUtilisateur.getGroupeCours();
-          }
-        }
-      })*/
-      /*.when('/cours/:sigle/:noGroupe/', {
-        templateUrl: 'views/configProfil.html',
-        controller: 'ProfilCtrl',
-        controllerAs: 'profil',
-        resolve: {
-          currentSession: function(Session){
-            return Session.validateSession();
-          }
-        }
-      })*/
-      .when('/calendrier', {
-        templateUrl: 'views/calendrier.html',
-        controller: 'CalendrierCtrl',
-        controllerAs: 'calendrier',
-        resolve: {
-          currentSession: function(Session){
-            return Session.validateSession();
-          }
-        }
-      })
+     
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
@@ -171,6 +149,7 @@ define([
         {
            $window.location.href="/";
         }
+        
     });
   }]);
   return app

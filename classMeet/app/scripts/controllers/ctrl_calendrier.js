@@ -1,62 +1,120 @@
 define([
     'angular',
-    'angular_ui_calendar'
+    'angular_ui_bootstrap',
+    'angular_ui_calendar',
+     '../services/srv_profil.js',
+     '../services/srv_cours.js'
 ], function(ng) {
   var app=ng.module('classMeetApp.calendrier', [
-    'ui.calendar'
+    'ui.bootstrap',
+    'ui.calendar',
+    "classMeetApp.profilService",
+    "classMeetApp.coursService"
   ])
-  .controller('CalendrierCtrl',function($scope,$window,$compile,Session,uiCalendarConfig){
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+  .controller('CalendrierCtrl',function($scope,$window,$compile,Session,uiCalendarConfig,Equipes,EquipeService){
+    $scope.equipeCourante=Equipes.getEquipeCourante();
 
-    //$scope.
+    if($scope.equipeCourante==null)
+    {
+      $window.location="/#/";
+        $window.location.reload();
+    }
 
     
-    /* event source that contains custom events on the scope */
-    $scope.events = [
-      {title: "Rencontre d'équipe", start: new Date(2016, 4 - 1, 8, 13, 30)},
-      {title: "Rencontre d'équipe", start: new Date(2016, 4 - 1, 15, 13, 30)},
-      {title: "Présentation Sprint 3", start: new Date(2016, 4 - 1, 25, 13, 20)}
+
+    $scope.evenement={
+      nom:"",
+      description:"",
+      dateHeureEvenement:new Date(),
+      dureeM:1,
+      lieu:""
+    };
+
+    $scope.events=[
     ];
-    /* event source that calls a function on every view switch */
+    EquipeService.getMembresEquipe($scope.equipeCourante.sigleCours,$scope.equipeCourante.noGroupeCours,$scope.equipeCourante.noEquipe).then(
+      function(data){},
+      function(error)
+      {
+        $window.location="/#/";
+        $window.location.reload();
+      }
+    )
+
     $scope.eventsF = function (start, end, timezone, callback) {
-      var s = new Date(start).getTime() / 1000;
-      var e = new Date(end).getTime() / 1000;
-      var m = new Date(start).getMonth();
-      var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-      callback(events);
+      EquipeService.getEvenementsEquipe($scope.equipeCourante.sigleCours,$scope.equipeCourante.noGroupeCours,$scope.equipeCourante.noEquipe).then(
+        function(data)
+        {
+          $scope.events=[];
+          if(data!=null&&data!="")
+          {
+            data.forEach(function(data)
+            {
+              $scope.events.push({title:data.nom,desc:data.description,lieu:data.lieu,start: new Date(data.dateHeureEvenement),duree: data.dureeM});
+            });
+          }
+        },
+        function(error)
+        {
+        }
+      )
+      callback($scope.events);
     };
 
     /* alert on eventClick */
-    $scope.alertOnEventClick = function( date, jsEvent, view){
-        $scope.alertMessage = (date.title + ' was clicked ');
+    $scope.alertOnEventClick = function(currEvent, jsEvent, view){
+        alert(
+          "titre: "+currEvent.title +"\n"+
+          "description: " +currEvent.desc + "\n"+
+          "date: "+ new Date(currEvent.start) +"\n"+
+          "duree: "+currEvent.duree+" minutes\n"+
+          "lieu: "+currEvent.lieu);
     };
-    /* add and removes an event source of choice */
-    $scope.addRemoveEventSource = function(sources,source) {
-      var canAdd = 0;
-      angular.forEach(sources,function(value, key){
-        if(sources[key] === source){
-          sources.splice(key,1);
-          canAdd = 1;
-        }
-      });
-      if(canAdd === 0){
-        sources.push(source);
+
+    /* add custom event*/
+    $scope.addEvent = function(evenement) {
+      if(evenement.nom==""||evenement.nom==null)
+      {
+        alert("Le champ Titre est vide");
+      }
+      else if(evenement.dateHeureEvenement==null)
+      {
+        alert("Le champ Date est vide");
+      }
+      else if(evenement.dureeM<1||evenement.dureeM==null)
+      {
+        alert("Le champ Duree est invalide");
+      }
+      else
+      {
+        EquipeService.addEvenementsEquipe($scope.equipeCourante.sigleCours,$scope.equipeCourante.noGroupeCours,$scope.equipeCourante.noEquipe,evenement).then(
+          function(data)
+          {
+            if(data.status==1)
+            {
+              $scope.evenement={
+                nom:"",
+                description:"",
+                dateHeureEvenement:new Date(),
+                dureeM:1,
+                lieu:""
+              };
+              alert("Évenement ajouté au calendrier");
+            }
+            else
+            {
+              alert("Un événement est déjà planifé pour cette date et heure");
+            }
+            
+          },
+          function(error)
+          {
+            alert(error);
+          }
+        )
       }
     };
-    /* add custom event*/
-    $scope.addEvent = function() {
-      $scope.events.push({
-        title: 'Open Sesame',
-        start: new Date(y, m, 28)
-      });
-    };
-    /* remove event */
-    $scope.remove = function(index) {
-      $scope.events.splice(index,1);
-    };
+
     /* Change View */
     $scope.changeView = function(view,calendar) {
       uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
@@ -73,7 +131,8 @@ define([
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
-    /* config object */
+
+
     $scope.uiConfig = {
       calendar:{
         height: 450,
@@ -84,12 +143,31 @@ define([
           right: 'today prev,next'
         },
         eventClick: $scope.alertOnEventClick,
-        eventRender: $scope.eventRender
+        eventRender: $scope.eventRender,
+        loading: $scope.loading
       }
     };
 
-    /* event sources array*/
-    $scope.eventSources = [$scope.events];
+     $scope.dateOptions = {
+    dateDisabled: false,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+    $scope.isOpenDatePicker=false;
+    $scope.openDatePicker=function()
+    {
+      $scope.isOpenDatePicker=true;
+    }
+
+    $scope.eventSources = [$scope.eventsF];
+
+    $scope.format='yyyy-MM-dd';
+
+    $scope.hstep = 1;
+  $scope.mstep = 1;
   })
   return app;
 })

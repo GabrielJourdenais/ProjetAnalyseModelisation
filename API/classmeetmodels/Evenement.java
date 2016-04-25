@@ -1,26 +1,47 @@
 package classmeetmodels;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Evenement {
 
 	private String nom;
 	private String description;
-	private String dateEvenements;
+	private Date dateHeureEvenement;
+	private int dureeM;
 	private String lieu;
+	
+	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+	private static DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	public Evenement() {
 		super();
 		this.nom = "";
 		this.description = "";
-		this.dateEvenements = "";
+		this.dateHeureEvenement = new Date();
+		this.dureeM=0;
 		this.lieu = "";
 	}
 
 	public Evenement(String nom, String description,
-			String dateEvenements, String lieu) {
+			String dateHeureEvenement, int dureeM, String lieu) throws ParseException {
 		super();
 		this.nom = nom;
 		this.description = description;
-		this.dateEvenements = dateEvenements;
+		this.dateHeureEvenement = format.parse(dateHeureEvenement);
+		this.dureeM=dureeM;
+		this.lieu = lieu;
+	}
+	
+	public Evenement(String nom, String description,
+			Date dateHeureEvenement, int dureeM, String lieu){
+		super();
+		this.nom = nom;
+		this.description = description;
+		this.dateHeureEvenement = dateHeureEvenement;
+		this.dureeM=dureeM;
 		this.lieu = lieu;
 	}
 
@@ -40,12 +61,20 @@ public class Evenement {
 		this.description = description;
 	}
 
-	public String getDateEvenements() {
-		return dateEvenements;
+	public String getDateHeureEvenement() {
+		return dateFormat.format(dateHeureEvenement);
+	}
+	
+	public void setDateHeureEvenement(String dateHeureEvenement) throws ParseException {
+		this.dateHeureEvenement = format.parse(dateHeureEvenement);
+	}
+	
+	public int getDureeM() {
+		return dureeM;
 	}
 
-	public void setDateEvenements(String dateEvenements) {
-		this.dateEvenements = dateEvenements;
+	public void setDureeM(int dureeM) {
+		this.dureeM = dureeM;
 	}
 
 	public String getLieu() {

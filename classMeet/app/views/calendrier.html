@@ -1,4 +1,45 @@
 <div ng-include="'views/menu/menu.html'"></div>
+<div ng-include="'views/menu/menuEquipe.html'"></div>
 <div ng-controller="CalendrierCtrl">
-<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+	<h3>{{equipeCourante.sigleCours}}-{{equipeCourante.noGroupeCours}}</h3>
+  	<h4>{{equipeCourante.nomEquipe}}</h4>
+  	<br>
+  	
+	<div ui-calendar="uiConfig.calendar" class="span8 calendar" calendar="calendar" ng-model="eventSources"></div>
+	<br>
+	<h4>Ajouter un événement</h4>
+	<form>
+       <table class="table table-hover">
+       	  <tbody class="disable-text-selection">
+       	  	<tr><td>Titre</td><td><input type="text" ng-model="evenement.nom"/></td></tr>
+       	  	<tr><td>Description</td><td><textarea style="resize: none;width:400px;height:200px;"ng-model="evenement.description"/></td></tr>
+       	  		<td>Date</td>
+       	  		<td>
+       	  		<div>
+			        <p class="input-group">
+			          <input type="text" class="form-control" uib-datepicker-popup={{format}} ng-model="evenement.dateHeureEvenement" is-open="isOpenDatePicker" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+			          <span class="input-group-btn">
+			            <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+			          </span>
+			        </p>
+			      </div>
+       	  		</td>
+       	  	</tr>
+       	  	<tr>
+       	  		<td>Heure</td>
+       	  		<td><uib-timepicker ng-model="evenement.dateHeureEvenement" hour-step="hstep" minute-step="mstep" show-meridian=false></uib-timepicker></td>
+       	  	</tr>
+       	  	<tr>
+       	  		<td>Duree(Minutes)</td><td><input type="number" min="1" max="1440" ng-model="evenement.dureeM"/></td>
+       	  	</tr>
+       	  	<tr>
+       	  		<td>Lieu</td><td><input type="text" ng-model="evenement.lieu"/></td>
+       	  	</tr>
+       	  	<tr>
+       	  		<td><input type="button" class="btn btn-default" ng-click="addEvent(evenement)" value="Ajouter"/></td>
+       	  	</tr>
+         </tbody>
+       </table>
+   	</form>
+
 </div> 

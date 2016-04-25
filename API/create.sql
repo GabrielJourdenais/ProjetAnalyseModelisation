@@ -111,6 +111,22 @@ CONSTRAINT fk_Depot_Equipe FOREIGN KEY(noEquipe) REFERENCES Equipe(noEquipe)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE RequeteMembreEquipe (
+sigle VARCHAR(7),
+noGroupeCours INTEGER,
+noEquipe INTEGER,
+codePermanent VARCHAR(12),
+CONSTRAINT pk_Fichier PRIMARY KEY(sigle,noEquipe,codePermanent),
+CONSTRAINT fk_RequeteMembre_Equipe_Cours FOREIGN KEY(sigle) REFERENCES Cours(sigle)
+ON DELETE NO ACTION ON UPDATE CASCADE,
+CONSTRAINT fk_RequeteMembre_Equipe_Groupe_Cours FOREIGN KEY(noGroupeCours) REFERENCES GroupeCours(noGroupeCours)
+ON DELETE NO ACTION ON UPDATE CASCADE,
+CONSTRAINT fk_RequeteMembre_Equipe_Equipe FOREIGN KEY(noEquipe) REFERENCES Equipe(noEquipe)
+ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT fk_RequeteMembre_Equipe_Etudiant FOREIGN KEY(codePermanent) REFERENCES Utilisateur(codeUtilisateur)
+ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE EtudiantEquipe (
 sigle VARCHAR(7),
 noGroupeCours INTEGER,
